@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "wedding-invitation-makers",
   "builds": [
     {
       "src": "weddingcards/wsgi.py",
