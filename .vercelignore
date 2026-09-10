@@ -1,0 +1,28 @@
+# Exclude large media and image directories
+media/
+images1/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# Database
+db.sqlite3
+
+# Scratch files
+scratch/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Git
+.git/
+
+# Static files (will be collected during build)
+staticfiles/
