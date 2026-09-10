@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Portal Login | Siddhi Vinayaka Cards</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+  
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-weight: normal;
+      font-style: normal;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+
+  <!-- Local Custom CSS Stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+  <script>
+    window.tailwind = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#745c00",
+            "on-secondary-fixed": "#241a00",
+            "on-primary-fixed": "#40000f",
+            "inverse-primary": "#ffb2b8",
+            "background": "#fbf9f6",
+            "surface-container-highest": "#e4e2df",
+            "on-secondary-fixed-variant": "#574500",
+            "on-tertiary-container": "#ff868c",
+            "on-primary-container": "#ff8592",
+            "primary": "#590018",
+            "outline-variant": "#ddc0c1",
+            "error-container": "#ffdad6",
+            "primary-fixed-dim": "#ffb2b8",
+            "on-tertiary-fixed": "#40000b",
+            "surface-variant": "#e4e2df",
+            "on-primary-fixed-variant": "#851f33",
+            "surface-container": "#efeeeb",
+            "primary-container": "#7a162b",
+            "secondary": "#735c00",
+            "inverse-surface": "#30312f",
+            "tertiary-container": "#7d1224",
+            "tertiary-fixed": "#ffdada",
+            "on-surface-variant": "#564243",
+            "inverse-on-surface": "#f2f0ed",
+            "on-tertiary-fixed-variant": "#881c2b",
+            "secondary-fixed": "#ffe088",
+            "secondary-container": "#fed65b",
+            "on-primary": "#ffffff",
+            "error": "#ba1a1a",
+            "surface-container-high": "#eae8e5",
+            "surface-tint": "#a53749",
+            "secondary-fixed-dim": "#e9c349",
+            "tertiary": "#5a0013",
+            "primary-fixed": "#ffdadb",
+            "surface-dim": "#dbdad7",
+            "on-error": "#ffffff",
+            "surface-bright": "#fbf9f6",
+            "tertiary-fixed-dim": "#ffb3b4",
+            "on-tertiary": "#ffffff",
+            "outline": "#8a7172",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1b1c1a",
+            "on-background": "#1b1c1a",
+            "surface": "#fbf9f6",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "surface-container-low": "#f5f3f0"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "space-3xl": "4.5rem",
+            "space-sm": "0.75rem",
+            "space-xl": "2rem",
+            "space-2xl": "3rem",
+            "space-xs": "0.5rem",
+            "space-2xs": "0.25rem",
+            "container-max": "80rem",
+            "space-md": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-lg": "1.5rem",
+            "gutter-mobile": "0.75rem"
+          },
+          fontFamily: {
+            "label-lg": ["Plus Jakarta Sans"],
+            "price-strike": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "price-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Playfair Display"],
+            "display-xl-mobile": ["Playfair Display"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Playfair Display"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Playfair Display"],
+            "headline-lg-mobile": ["Playfair Display"],
+            "display-xl": ["Playfair Display"]
+          },
+          fontSize: {
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "price-strike": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "price-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "display-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "display-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-background font-body-md text-on-surface min-h-screen flex items-center justify-center p-space-md">
+  <main class="w-full flex items-center justify-center">
+    <div class="flex flex-col w-full items-center justify-center py-space-xl px-space-sm relative overflow-hidden">
+      <!-- Subtle Royal Mandala Watermark Background -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
+        <svg class="w-[780px] h-[780px] text-primary" fill="currentColor" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" fill="none" r="48" stroke="currentColor" stroke-width="0.75"></circle>
+          <circle cx="50" cy="50" fill="none" r="42" stroke="currentColor" stroke-width="0.5"></circle>
+          <circle cx="50" cy="50" fill="none" r="36" stroke="currentColor" stroke-dasharray="1.5 1.5" stroke-width="0.5"></circle>
+          <path d="M50 2 L50 98 M2 50 L98 50 M16 16 L84 84 M16 84 L84 16" stroke="currentColor" stroke-width="0.4"></path>
+          <circle cx="50" cy="50" fill="none" r="26" stroke="currentColor" stroke-width="0.6"></circle>
+          <polygon fill="none" points="50,14 62,38 86,50 62,62 50,86 38,62 14,50 38,38" stroke="currentColor" stroke-width="0.5"></polygon>
+          <polygon fill="none" points="50,22 58,42 78,50 58,58 50,78 42,58 22,50 42,42" stroke="currentColor" stroke-width="0.5"></polygon>
+        </svg>
+      </div>
+
+      <!-- Soft Ambient Glow Orbs -->
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-fixed-dim/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary-fixed/25 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Main Heritage Portal Shell -->
+      <div class="w-full max-w-[540px] relative z-10">
+
+        <!-- Back to Store Link -->
+        <div class="mb-space-sm flex items-center justify-between">
+          <a href="{% url 'catalog:home' %}" class="inline-flex items-center gap-space-2xs text-primary hover:text-primary-container font-label-md transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Back to Catalog
+          </a>
+        </div>
+
+        <!-- Top System Badges Bar -->
+        <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 px-space-xs mb-space-sm text-on-surface-variant">
+          <div class="inline-flex items-center gap-space-2xs bg-surface-container-low px-space-sm py-space-2xs rounded-full shadow-sm">
+            <span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings: 'FILL' 1;">lock</span>
+            <span class="font-label-sm text-label-sm text-on-secondary-fixed tracking-wider uppercase">256-Bit Encrypted Session</span>
+          </div>
+          <div class="inline-flex items-center gap-space-2xs bg-surface-container-low px-space-sm py-space-2xs rounded-full shadow-sm">
+            <span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+            <span class="font-label-sm text-label-sm text-on-secondary-fixed tracking-wider uppercase">SSO Enabled</span>
+          </div>
+        </div>
+
+        <!-- The Royal Paper Card Container -->
+        <div class="bg-surface-container-lowest rounded-xl shadow-xl p-6 sm:p-8 relative overflow-hidden">
+          <!-- Subtle Luxury Gilded Corner Details -->
+          <div class="absolute top-0 left-0 w-8 h-8 pointer-events-none bg-gradient-to-br from-secondary/40 to-transparent"></div>
+          <div class="absolute top-0 right-0 w-8 h-8 pointer-events-none bg-gradient-to-bl from-secondary/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 w-8 h-8 pointer-events-none bg-gradient-to-tr from-secondary/40 to-transparent"></div>
+          <div class="absolute bottom-0 right-0 w-8 h-8 pointer-events-none bg-gradient-to-tl from-secondary/40 to-transparent"></div>
+
+          <!-- Atelier Heritage Crest & Header -->
+          <div class="flex flex-col items-center text-center mb-5">
+            <div class="w-14 h-14 rounded-full bg-surface-container-low flex items-center justify-center shadow-sm mb-2.5 relative">
+              <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary-fixed shadow-md">
+                <span class="material-symbols-outlined text-[24px] text-[#fed65b]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+              </div>
+            </div>
+            <p class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-[#735c00] mb-1">Heritage Atelier Management</p>
+            <h1 class="font-headline-md text-headline-md text-[#590018] mb-1 tracking-tight">Siddhi Vinayaka Cards</h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm leading-relaxed">
+              Administrative &amp; Catalog Portal. Restricted access for certified typographers, catalog managers, and showroom directors.
+            </p>
+            <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-[#735c00] to-transparent mt-3"></div>
+          </div>
+
+          <!-- Authentication Form -->
+          <form class="space-y-4 flex flex-col gap-4" id="portal-login-form" action="{{ app_path }}" method="post">
+            {% csrf_token %}
+
+            {% if form.errors and not form.non_field_errors %}
+              <div class="p-2.5 bg-error-container text-on-error-container rounded-lg font-body-sm text-body-sm flex items-center gap-2 shadow-sm mb-3">
+                <span class="material-symbols-outlined text-[18px] text-[#ba1a1a]">error</span>
+                <span>Please correct the errors below.</span>
+              </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+              {% for error in form.non_field_errors %}
+                <div class="p-2.5 bg-error-container text-on-error-container rounded-lg font-body-sm text-body-sm flex items-center gap-2 shadow-sm mb-3">
+                  <span class="material-symbols-outlined text-[18px] text-[#ba1a1a]">error</span>
+                  <span>{{ error }}</span>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <!-- Field 1: Username -->
+            <div class="space-y-1.5">
+              <label class="block font-label-md text-label-md uppercase tracking-wider text-on-surface mb-1" for="username">Username</label>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute left-3 text-[#590018] text-[20px] pointer-events-none">person</span>
+                <input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-4 py-2.5 rounded-lg shadow-sm border border-outline-variant/40 focus:outline-none focus:bg-surface-container-lowest focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200" id="username" name="username" placeholder="Enter your username" required type="text" value="{{ form.username.value|default:'' }}">
+              </div>
+            </div>
+
+            <!-- Field 2: Password -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between mb-1">
+                <label class="block font-label-md text-label-md uppercase tracking-wider text-on-surface" for="access-pin">Password</label>
+              </div>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute left-3 text-[#590018] text-[20px] pointer-events-none">key</span>
+                <input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-11 py-2.5 rounded-lg shadow-sm border border-outline-variant/40 focus:outline-none focus:bg-surface-container-lowest focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200" id="access-pin" name="password" placeholder="Enter password" required type="password">
+                <button aria-label="Toggle password view" class="absolute right-3 text-[#735c00] hover:text-[#590018] p-1 flex items-center justify-center transition-colors" id="toggle-password-btn" onclick="togglePasswordVisibility()" type="button">
+                  <span class="material-symbols-outlined text-[20px]" id="pwd-icon">visibility</span>
+                </button>
+              </div>
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <!-- Primary Action CTA -->
+            <div class="pt-2 mt-1">
+              <button class="w-full bg-[#590018] hover:bg-[#7a162b] text-[#ffe088] font-bold text-sm py-2.5 px-5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 tracking-wider uppercase group border border-[#735c00]/30" id="submit-btn" type="submit" style="color: #ffe088 !important; background-color: #590018 !important;">
+                <span id="btn-label" style="color: #ffe088 !important; font-weight: 700; font-size: 14px;">Sign In</span>
+                <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform" style="color: #ffe088 !important;">arrow_forward</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Feedback Status Banner -->
+          <div class="hidden mt-space-md p-space-sm bg-secondary-container text-on-secondary-container rounded-lg font-body-sm text-body-sm flex items-center gap-space-xs shadow-sm" id="status-toast">
+            <span class="material-symbols-outlined text-[18px]">info</span>
+            <span id="status-toast-msg">Authenticating cryptographic credentials...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function togglePasswordVisibility() {
+      const input = document.getElementById('access-pin');
+      const icon = document.getElementById('pwd-icon');
+      if (!input || !icon) return;
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+  </script>
+</body>
+</html>

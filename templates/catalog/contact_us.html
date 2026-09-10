@@ -1,0 +1,191 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+
+{% block title %}Contact Us — Siddhi Vinayaka Cards{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+
+  <!-- ── Page Banner ────────────────────────────────── -->
+  <section class="w-full bg-surface-container-low py-space-2xl px-gutter-desktop border-b border-surface-variant/40">
+    <div class="max-w-container-max mx-auto text-center flex flex-col items-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary mb-space-sm">
+        <span class="material-symbols-outlined text-[18px]">support_agent</span>
+        <span class="font-label-sm text-xs uppercase tracking-wider font-bold">Personalized Wedding WhatsApp Support</span>
+      </div>
+      <h1 class="font-display-xl text-3xl md:text-5xl text-primary font-bold mb-space-xs">
+        Speak with Our Royal Stationery Specialist
+      </h1>
+      <p class="font-body-lg text-sm md:text-base text-on-surface-variant max-w-2xl">
+        Have questions about custom typography, regional language printing, sample delivery, or emergency printing? We are here to assist you 7 days a week.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Contact Info Cards & Form Section ───────────── -->
+  <section class="w-full py-space-3xl px-gutter-desktop bg-surface">
+    <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-2xl">
+
+      <!-- Left 5 Cols: Quick Contact Cards -->
+      <div class="lg:col-span-5 flex flex-col gap-space-md">
+
+        <!-- Store Address Card -->
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm border-l-4 border-primary hover:shadow-md transition-shadow">
+          <div class="flex items-start gap-space-md">
+            <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[24px]">location_on</span>
+            </div>
+            <div>
+              <span class="font-label-sm text-xs uppercase text-secondary font-bold block mb-1">Flagship Store Address</span>
+              <h3 class="font-headline-sm text-base md:text-lg font-bold text-primary leading-snug">
+                #5-1-997, Koti, Putlibowli, Gowliguda, Hyderabad - 500095, Telangana
+              </h3>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-1.5 font-semibold">
+                📍 Landmark: Near Ram Mandir
+              </p>
+              <a href="https://www.google.com/maps/search/?api=1&query=5-1-997+Koti+Putlibowli+Gowliguda+Hyderabad+500095+Telangana+Near+Ram+Mandir" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary font-bold text-xs mt-2 hover:underline">
+                Open in Google Maps →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Helpline Card -->
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm border-l-4 border-secondary hover:shadow-md transition-shadow">
+          <div class="flex items-start gap-space-md">
+            <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[24px]">call</span>
+            </div>
+            <div>
+              <span class="font-label-sm text-xs uppercase text-secondary font-bold block mb-1">Phone Assistance</span>
+              <div class="flex flex-col gap-1">
+                <a href="tel:9618022264" class="font-headline-sm text-base md:text-lg font-bold text-primary hover:underline flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">phone_in_talk</span> +91 96180 22264
+                </a>
+                <a href="tel:8639093095" class="font-headline-sm text-base md:text-lg font-bold text-primary hover:underline flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">phone_in_talk</span> +91 86390 93095
+                </a>
+              </div>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-2">Available 10:00 AM – 8:00 PM IST (Mon – Sun)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp Card -->
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm border-l-4 border-[#25d366] hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-space-md">
+            <div class="w-12 h-12 rounded-full bg-[#25d366] text-white flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[24px]">chat</span>
+            </div>
+            <div>
+              <span class="font-label-sm text-xs uppercase text-secondary font-bold block">Instant WhatsApp Chat</span>
+              <h3 class="font-headline-sm text-base md:text-lg font-bold text-primary">+91 96180 22264 / +91 86390 93095</h3>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-1">Get immediate sample proofs, price quotes, and video calls.</p>
+              <div class="flex flex-wrap gap-3 mt-2">
+                <a href="https://wa.me/919618022264" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#25d366] font-bold text-xs hover:underline">
+                  Chat +91 96180 22264 →
+                </a>
+                <a href="https://wa.me/918639093095" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#25d366] font-bold text-xs hover:underline">
+                  Chat +91 86390 93095 →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right 7 Cols: Interactive Inquiry Form -->
+      <div class="lg:col-span-7 bg-surface-container-lowest p-space-2xl rounded-2xl shadow-md border border-surface-variant/40">
+        {% if submitted %}
+          <div class="p-6 bg-primary/10 text-primary rounded-xl text-center">
+            <span class="text-4xl block mb-2">✦</span>
+            <h3 class="font-headline-sm text-2xl font-bold">Thank You for Getting in Touch!</h3>
+            <p class="font-body-md text-sm text-on-surface-variant mt-2">
+              Our royal stationery team has received your request and will reach out to you via WhatsApp / Phone within 2 hours.
+            </p>
+            <a href="{% url 'catalog:all_invitations' %}" class="inline-block mt-6 bg-primary text-on-primary px-6 py-2.5 rounded-lg font-bold text-xs">
+              Continue Browsing Collection
+            </a>
+          </div>
+        {% else %}
+          <h2 class="font-headline-lg text-2xl font-bold text-primary mb-space-xs">Send Us an Inquiry</h2>
+          <p class="font-body-md text-xs text-on-surface-variant mb-space-lg">Fill out the details below and we will prepare customized options for your wedding.</p>
+
+          <form method="post" action="{% url 'catalog:contact_us' %}" class="flex flex-col gap-space-md">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+              <div>
+                <label class="font-label-sm text-xs font-bold text-on-surface block mb-1">Your Full Name *</label>
+                <input required name="name" class="w-full px-space-md py-2.5 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border border-surface-variant/50" placeholder="e.g. Ananya Sharma" type="text" />
+              </div>
+              <div>
+                <label class="font-label-sm text-xs font-bold text-on-surface block mb-1">WhatsApp / Phone Number *</label>
+                <input required name="phone" class="w-full px-space-md py-2.5 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border border-surface-variant/50" placeholder="+91 96180 22264" type="tel" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+              <div>
+                <label class="font-label-sm text-xs font-bold text-on-surface block mb-1">Email Address</label>
+                <input name="email" class="w-full px-space-md py-2.5 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border border-surface-variant/50" placeholder="ananya@example.com" type="email" />
+              </div>
+              <div>
+                <label class="font-label-sm text-xs font-bold text-on-surface block mb-1">Estimated Quantity</label>
+                <select name="quantity" class="w-full px-space-md py-2.5 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border border-surface-variant/50 cursor-pointer">
+                  <option value="100-250">100 – 250 Cards</option>
+                  <option value="250-500">250 – 500 Cards</option>
+                  <option value="500+">500+ Cards (Bulk Slab)</option>
+                  <option value="sample">Sample Swatch Only</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="font-label-sm text-xs font-bold text-on-surface block mb-1">Tell Us About Your Wedding / Requirements</label>
+              <textarea name="message" rows="4" class="w-full px-space-md py-2.5 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border border-surface-variant/50" placeholder="Mention preferred card style, wedding dates, regional languages needed (e.g. Sanskrit, Telugu, Tamil, Hindi)..."></textarea>
+            </div>
+
+            <button type="submit" class="bg-primary text-on-primary hover:bg-primary-container py-space-sm rounded-lg font-label-lg text-xs font-bold shadow-md transition-colors">
+              Submit Inquiry via WhatsApp
+            </button>
+          </form>
+        {% endif %}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Interactive Google Maps Location Section ───────── -->
+  <section class="w-full pb-space-3xl px-gutter-desktop bg-surface">
+    <div class="max-w-container-max mx-auto">
+      <div class="flex flex-col items-center text-center mb-space-lg">
+        <span class="font-label-sm text-xs uppercase tracking-widest text-secondary font-bold mb-1">Find Us on Google Maps</span>
+        <h2 class="font-headline-lg text-2xl md:text-3xl text-primary font-bold">Visit Our Store in Gowliguda, Hyderabad</h2>
+        <p class="font-body-md text-xs md:text-sm text-on-surface-variant mt-1 font-semibold">
+          📍 Address: #5-1-997, Koti, Putlibowli, Gowliguda, Hyderabad - 500095, Telangana (Near Ram Mandir)
+        </p>
+        <div class="flex items-center gap-4 mt-2 text-xs font-bold text-primary">
+          <span>📞 9618022264</span>
+          <span>•</span>
+          <span>📞 8639093095</span>
+        </div>
+      </div>
+      <div class="w-full rounded-2xl overflow-hidden shadow-lg border border-surface-variant/40 bg-surface-container-low relative">
+        <iframe
+          class="w-full h-80 md:h-[420px]"
+          src="https://maps.google.com/maps?q=5-1-997%2C+Koti%2C+Putlibowli%2C+Gowliguda%2C+Hyderabad+-+500095%2C+Telangana+(Near+Ram+Mandir)&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          width="100%"
+          height="420"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Siddhi Vinayaka Cards Store Location Map"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

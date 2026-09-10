@@ -1,0 +1,27 @@
+{% load i18n %}
+<div class="pagination text-xs text-ink-700 flex items-center justify-between w-full">
+  <div class="font-mono text-[11px] text-ink-600">
+    {% if pagination_required %}
+      Showing <span class="font-bold text-regal-700">{{ cl.result_list|length }}</span> of <span class="font-bold text-ink-900">{{ cl.result_count }}</span> {{ cl.opts.verbose_name_plural }}
+    {% else %}
+      Showing all <span class="font-bold text-regal-700">{{ cl.result_count }}</span> {{ cl.opts.verbose_name_plural }}
+    {% endif %}
+    {% if show_all_url %}
+      <a href="{{ show_all_url }}" class="showall ml-2 underline text-regal-700 hover:text-regal-900">Show all</a>
+    {% endif %}
+  </div>
+
+  {% if pagination_required %}
+    <div class="flex items-center space-x-1">
+      {% for page in page_range %}
+        {% if page == cl.page_num %}
+          <span class="this-page px-3 py-1 bg-regal-700 text-white font-bold rounded shadow-2xs">{{ page }}</span>
+        {% elif page == '...' %}
+          <span class="px-2 text-ink-400">...</span>
+        {% else %}
+          <a href="{{ cl.get_query_string }}_p={{ page }}" class="px-3 py-1 bg-white hover:bg-parchment-200 text-ink-800 rounded border border-parchment-300 transition-colors">{{ page }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

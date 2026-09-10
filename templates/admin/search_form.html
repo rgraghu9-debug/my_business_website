@@ -1,0 +1,20 @@
+{% if cl.has_search %}
+<div id="toolbar" class="flex items-center gap-2">
+  <form id="changelist-search" method="get" class="flex items-center gap-2 w-full">
+    <div class="relative w-full">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-ink-500">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+      </div>
+      <input type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" class="w-full pl-9 pr-3 py-2 text-xs bg-parchment-50 border border-gold-400/50 rounded-md focus:border-regal-700 focus:ring-1 focus:ring-regal-700/20 placeholder:text-ink-500/60 transition" placeholder="Search by title, SKU, motif, or details..."/>
+    </div>
+    <button type="submit" class="px-4 py-2 bg-ink-800 hover:bg-ink-900 text-white text-xs font-semibold rounded-md border border-ink-900 transition-colors shrink-0">
+      Search
+    </button>
+    {% if show_result_count %}
+      <span class="text-xs text-ink-600 font-medium ml-2">({{ cl.result_count }} results)</span>
+    {% endif %}
+  </form>
+</div>
+{% endif %}

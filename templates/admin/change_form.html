@@ -1,0 +1,523 @@
+{% load i18n admin_urls static admin_modify %}
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#fbf9f6]">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>{% if add %}Add {{ opts.verbose_name }}{% else %}Change {{ original|truncatewords:"6" }} | {{ opts.verbose_name }}{% endif %} | Siddhi Vinayaka Cards Admin Atelier</title>
+
+  <!-- Google Fonts: Playfair Display, Cinzel, Plus Jakarta Sans & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Tailwind CSS v3 with Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            regal: {
+              900: '#380a13',
+              800: '#530f1c',
+              700: '#6d1425',
+              600: '#7a162b',
+              500: '#8e1c33',
+              100: '#faeef1',
+              50: '#fdf7f8'
+            },
+            gold: {
+              600: '#9b7430',
+              500: '#ba8c3b',
+              400: '#c89d56',
+              300: '#dfb771',
+              200: '#faecc8',
+              100: '#fef7e7'
+            },
+            parchment: {
+              50: '#fcfbfa',
+              100: '#f7f4ef',
+              200: '#ede8de',
+              300: '#ded7c9',
+              400: '#c5bbab',
+              border: '#e8e1d5'
+            },
+            ink: {
+              900: '#191515',
+              800: '#2b2424',
+              700: '#423b3b',
+              600: '#5e5454',
+              500: '#7f7474'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style data-purpose="custom-admin-styles">
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f7f4ef;
+      color: #2b2424;
+      background-image: radial-gradient(rgba(200, 157, 86, 0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+    }
+    .font-luxury {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    .border-gold-emboss {
+      border: 1px solid rgba(200, 157, 86, 0.35);
+      box-shadow: 0 1px 3px rgba(35, 23, 10, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    .royal-gradient-header {
+      background: linear-gradient(90deg, #530f1c 0%, #6d1425 45%, #460c17 100%);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #7a162b !important;
+      box-shadow: 0 0 0 2px rgba(122, 22, 43, 0.2) !important;
+    }
+    /* Django Fieldset Overrides */
+    .form-row {
+      margin-bottom: 1.25rem;
+    }
+    .form-row input[type="text"],
+    .form-row input[type="number"],
+    .form-row input[type="email"],
+    .form-row input[type="url"],
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      border-radius: 0.375rem;
+      border-color: #ded7c9;
+      background-color: #fcfbfa;
+      padding: 0.625rem 0.75rem;
+      font-size: 0.875rem;
+    }
+    .form-row label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #2b2424;
+      margin-bottom: 0.375rem;
+    }
+    .form-row .help {
+      font-size: 0.75rem;
+      color: #7f7474;
+      margin-top: 0.25rem;
+    }
+    .errors {
+      color: #991b1b;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+
+  {% block extrahead %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-gold-200 selection:text-regal-900">
+
+<!-- BEGIN: TopHeader -->
+<header class="royal-gradient-header text-white border-b border-gold-500/30 sticky top-0 z-50 shadow-md">
+  <div class="max-w-[1920px] mx-auto px-3 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 gap-2 sm:gap-4">
+      
+      <!-- Logo & Brand Monogram -->
+      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        <a href="{% url 'admin:index' %}" class="flex items-center space-x-2 sm:space-x-3">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gold-400/60 flex items-center justify-center bg-regal-900/50 shadow-inner shrink-0">
+            <span class="font-luxury text-gold-300 font-bold text-xs sm:text-base tracking-wider">SV</span>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+              <span class="font-luxury text-base sm:text-xl lg:text-2xl font-semibold tracking-wide text-gold-300 drop-shadow-sm truncate max-w-[150px] xs:max-w-none">Siddhi Vinayaka Cards</span>
+              <span class="hidden xl:inline-block text-[10px] uppercase font-bold tracking-widest bg-gold-500/20 text-gold-300 px-2 py-0.5 rounded border border-gold-400/30">Admin Atelier</span>
+            </div>
+            <span class="hidden sm:inline-block text-[10px] sm:text-[11px] text-zinc-300/80 tracking-wider uppercase font-medium">Luxury Wedding Invitations · CMS v5.1.2</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Quick Command Bar / Search Global -->
+      <div class="hidden lg:flex items-center flex-1 max-w-lg mx-4 lg:mx-6">
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gold-300/70">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <input class="w-full pl-10 pr-12 py-1.5 bg-regal-900/60 border border-gold-400/30 rounded-md text-xs text-parchment-100 placeholder-parchment-300/60 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 transition-all" placeholder="Search records, SKUs..." type="text" id="admin-quick-search"/>
+        </div>
+      </div>
+
+      <!-- User Account & Django Controls -->
+      <div class="hidden md:flex items-center space-x-3 lg:space-x-4 text-xs shrink-0">
+        <div class="flex flex-col text-right">
+          <span class="text-parchment-200 font-semibold tracking-wide">WELCOME, <strong class="text-gold-300 font-bold tracking-wider uppercase">{{ user.get_full_name|default:user.username }}</strong></span>
+          <span class="text-[11px] text-emerald-300/90 flex items-center justify-end space-x-1">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>{% if user.is_superuser %}Superuser{% else %}Staff{% endif %}</span>
+          </span>
+        </div>
+        <div class="h-8 w-px bg-regal-800/80 border-r border-gold-500/20"></div>
+        
+        <nav class="flex items-center space-x-2.5 text-parchment-200">
+          <a class="hover:text-gold-300 font-medium transition-colors flex items-center space-x-1" href="{% url 'catalog:home' %}" target="_blank" title="Open Customer Facing E-Store">
+            <span>View Site</span>
+            <svg class="w-3.5 h-3.5 text-gold-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </a>
+          <span class="text-gold-400/40">/</span>
+          <a class="hover:text-gold-300 font-medium transition-colors" href="{% url 'admin:password_change' %}">Password</a>
+          <span class="text-gold-400/40">/</span>
+          <form action="{% url 'admin:logout' %}" method="post" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="text-rose-300 hover:text-rose-200 font-semibold transition-colors">Logout</button>
+          </form>
+        </nav>
+      </div>
+
+      <!-- Mobile Hamburger Button (md:hidden) -->
+      <div class="flex items-center space-x-2 md:hidden">
+        <button
+          type="button"
+          onclick="toggleAdminMobileMenu(event)"
+          id="admin-mobile-btn"
+          class="p-2 rounded-md bg-regal-900/80 border border-gold-400/40 text-gold-300 hover:bg-regal-800 focus:outline-none transition-colors cursor-pointer"
+          aria-label="Toggle Admin Menu"
+        >
+          <svg id="admin-mobile-icon" class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="admin-mobile-menu" class="hidden md:hidden py-3 border-t border-gold-500/20 flex flex-col gap-3">
+      <div class="bg-regal-900/80 p-3 rounded-md border border-gold-400/20 flex flex-col gap-2.5 text-xs text-parchment-200">
+        <div class="flex items-center justify-between border-b border-gold-500/20 pb-2">
+          <span>Logged in as: <strong class="text-gold-300 uppercase">{{ user.get_full_name|default:user.username }}</strong></span>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-400/30 font-medium">{% if user.is_superuser %}Superuser{% else %}Staff{% endif %}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center pt-1 font-medium">
+          <a class="p-2 rounded bg-regal-800/80 text-gold-300 hover:bg-regal-700 transition-colors flex items-center justify-center gap-1" href="{% url 'catalog:home' %}" target="_blank">
+            <span>View Site</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </a>
+          <a class="p-2 rounded bg-regal-800/80 text-parchment-100 hover:bg-regal-700 transition-colors flex items-center justify-center" href="{% url 'admin:password_change' %}">
+            Password
+          </a>
+          <form action="{% url 'admin:logout' %}" method="post" class="w-full">
+            {% csrf_token %}
+            <button type="submit" class="w-full h-full p-2 rounded bg-rose-900/40 text-rose-200 hover:bg-rose-900/60 transition-colors font-semibold">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+<!-- END: TopHeader -->
+
+<!-- BEGIN: BreadcrumbAndStatusBar -->
+<section class="bg-parchment-100 border-b border-parchment-300 py-2.5 shadow-sm">
+  <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-3 text-xs">
+    
+    <!-- Breadcrumb Pathway -->
+    <div class="flex items-center space-x-2 text-ink-600 font-medium">
+      <a class="text-regal-600 hover:text-regal-800 font-medium flex items-center" href="{% url 'admin:index' %}">
+        <svg class="w-3.5 h-3.5 mr-1 text-gold-600" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+        </svg>
+        Home
+      </a>
+      <span class="text-parchment-400 font-bold">›</span>
+      <a class="hover:text-regal-800 transition-colors" href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name|default:opts.app_label|capfirst }}</a>
+      <span class="text-parchment-400 font-bold">›</span>
+      {% if has_change_permission %}
+        <a class="hover:text-regal-800 transition-colors" href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+      {% else %}
+        <span>{{ opts.verbose_name_plural|capfirst }}</span>
+      {% endif %}
+      <span class="text-parchment-400 font-bold">›</span>
+      <span class="font-semibold text-regal-700 tracking-wide">{% if add %}Add {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"6" }}{% endif %}</span>
+    </div>
+
+    <!-- Active Atelier Hardware / Press State -->
+    <div class="flex items-center space-x-3 text-[11px]">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-medium bg-gold-100 text-regal-900 border border-gold-300">
+        <span class="w-1.5 h-1.5 rounded-full bg-regal-600 mr-1.5"></span>
+        Model: {{ opts.app_label }}.{{ opts.object_name }}
+      </span>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+        Heidelberg Press Sync: Connected
+      </span>
+    </div>
+
+  </div>
+</section>
+<!-- END: BreadcrumbAndStatusBar -->
+
+<!-- BEGIN: MainContent -->
+<main class="flex-1 max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
+
+  <!-- Page Header & Action Bar -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-parchment-border mb-8">
+    <div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs uppercase tracking-widest font-cinzel text-regal-700 font-bold">Catalog Object Editor</span>
+        <span class="bg-gold-100 text-regal-800 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-gold-300">
+          {% if add %}New {{ opts.verbose_name }}{% else %}{{ opts.verbose_name }} #{{ original.pk }}{% endif %}
+        </span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-luxury font-bold text-ink-900 mt-1">
+        {% if add %}Add {{ opts.verbose_name }}{% else %}{{ original }}{% endif %}
+      </h1>
+      <p class="text-ink-600 text-xs sm:text-sm mt-1 max-w-3xl">
+        Manage bespoke stationery specifications, hot-foil stamping dies, paper GSM weights, price matrix, and live storefront catalog display.
+      </p>
+    </div>
+
+    <!-- Quick Context Controls -->
+    <div class="flex items-center gap-2.5 self-start md:self-center shrink-0">
+      {% if change and has_change_permission %}
+        <a class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-ink-700 bg-white border border-parchment-300 rounded-md shadow-2xs hover:bg-parchment-50 transition" href="{% url opts|admin_urlname:'history' original.pk %}">
+          <svg class="w-3.5 h-3.5 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+          <span>History</span>
+        </a>
+      {% endif %}
+      <a class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-regal-700 bg-parchment-100 border border-parchment-300 rounded-md hover:bg-parchment-200 transition" href="{% url 'catalog:home' %}" target="_blank">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span>View on Live Storefront</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Errors List -->
+  {% if errors %}
+    <div class="p-4 mb-6 bg-rose-50 text-rose-800 rounded-lg border border-rose-200 font-sans text-xs space-y-1 shadow-sm">
+      <div class="font-bold flex items-center gap-1.5 text-rose-900 text-sm">
+        <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        <span>Please correct the errors below:</span>
+      </div>
+      {{ adminform.form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  <!-- Django Form Container -->
+  <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" class="space-y-8" data-purpose="django-change-form">
+    {% csrf_token %}
+    {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
+    {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
+
+    <!-- Layout Grid: 2/3 Main Form, 1/3 Atelier Side Summary -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Main Form Column (Span 2) -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        {% for fieldset in adminform %}
+          <div class="bg-white rounded-lg border border-gold-emboss shadow-sm overflow-hidden">
+            {% if fieldset.name %}
+              <div class="bg-gradient-to-r from-regal-800 to-regal-700 text-white px-5 py-3.5 flex items-center justify-between border-b border-gold-400/40">
+                <div class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4 text-gold-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                  </svg>
+                  <h2 class="font-luxury tracking-wide font-semibold text-sm sm:text-base text-parchment-100">{{ fieldset.name }}</h2>
+                </div>
+                <span class="text-[10px] font-mono tracking-wider bg-regal-900 text-gold-300 px-2 py-0.5 rounded border border-gold-400/30">SPECIFICATION SECTION</span>
+              </div>
+            {% endif %}
+            
+            <div class="p-6 space-y-5">
+              {% for line in fieldset %}
+                <div class="grid grid-cols-1 {% if line.fields|length > 1 %}md:grid-cols-{{ line.fields|length }}{% endif %} gap-5">
+                  {% for field in line %}
+                    <div class="space-y-1.5 form-row {% if field.field.name %}field-{{ field.field.name }}{% endif %}">
+                      {{ field.errors }}
+                      <label class="block text-xs font-bold text-ink-800 tracking-wider uppercase" for="{{ field.field.id_for_label }}">
+                        {{ field.field.label }}
+                        {% if field.field.field.required %}<span class="text-regal-600">*</span>{% endif %}
+                      </label>
+                      <div class="relative">
+                        {{ field.field }}
+                      </div>
+                      {% if field.field.help_text %}
+                        <p class="text-[11px] text-ink-500 mt-1">{{ field.field.help_text|safe }}</p>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+
+        {% block inline_field_sets %}
+          {% for inline_admin_formset in inline_admin_formsets %}
+            {% include inline_admin_formset.opts.template %}
+          {% endfor %}
+        {% endblock %}
+
+      </div>
+
+      <!-- Sidebar Column (Span 1) -->
+      <div class="space-y-6">
+        
+        <!-- Atelier Spec Status Card -->
+        <div class="bg-white rounded-lg border border-gold-emboss shadow-sm overflow-hidden">
+          <div class="px-4 py-3 bg-regal-800 text-gold-200 flex items-center justify-between border-b border-gold-400/30">
+            <span class="font-luxury text-xs font-semibold uppercase tracking-wider">Atelier Record Information</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </div>
+          <div class="p-5 flex flex-col items-center text-center bg-gradient-to-b from-parchment-50 to-white border-b border-parchment-200">
+            <div class="w-16 h-16 rounded-full bg-regal-900 flex items-center justify-center text-gold-300 font-cinzel text-lg font-bold shadow-md mb-3 border border-gold-400/50">
+              SV
+            </div>
+            <h3 class="font-luxury font-bold text-ink-900 text-base">{% if add %}New Entry{% else %}{{ original }}{% endif %}</h3>
+            <p class="text-xs text-ink-500 mt-1">Model: {{ opts.verbose_name|capfirst }}</p>
+          </div>
+          <div class="p-4 bg-parchment-50/70 text-xs space-y-2.5">
+            <div class="flex justify-between text-ink-600">
+              <span>App Label</span>
+              <span class="font-mono text-ink-900 font-semibold">{{ opts.app_label }}</span>
+            </div>
+            <div class="flex justify-between text-ink-600">
+              <span>Record ID</span>
+              <span class="font-mono text-ink-900 font-semibold">{% if add %}Auto-assigned{% else %}#{{ original.pk }}{% endif %}</span>
+            </div>
+            <div class="flex justify-between text-ink-600">
+              <span>Environment</span>
+              <span class="font-semibold text-emerald-700">Production Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Press Machine Diagnostics Card -->
+        <div class="bg-white rounded-lg border border-gold-emboss shadow-sm p-5 space-y-4">
+          <h4 class="font-cinzel text-xs uppercase tracking-wider text-ink-600 font-bold pb-2 border-b border-parchment-200">Press Matrix Diagnostics</h4>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-ink-600">Gold Leaf Register Fit</span>
+                <span class="font-mono font-bold text-emerald-700">99.8%</span>
+              </div>
+              <div class="w-full bg-parchment-200 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-emerald-600 h-1.5 rounded-full w-[99.8%]"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-ink-600">Die Pressure Calibration</span>
+                <span class="font-mono font-bold text-amber-700">140 kN</span>
+              </div>
+              <div class="w-full bg-parchment-200 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-amber-600 h-1.5 rounded-full w-[85%]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BEGIN: StickyBottomActionToolbar -->
+    <div class="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-parchment-300 shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
+      <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <!-- Danger Action: Delete Record -->
+        <div>
+          {% if change and has_delete_permission %}
+            <a class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-md transition duration-150" href="{% url opts|admin_urlname:'delete' original.pk %}">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+              <span>Delete {{ opts.verbose_name }}</span>
+            </a>
+          {% endif %}
+        </div>
+
+        <!-- Primary Submit Controls -->
+        <div class="flex items-center flex-wrap justify-end gap-2.5">
+          <input class="cursor-pointer px-4 py-2 text-xs font-medium text-ink-700 bg-white border border-parchment-300 hover:bg-parchment-50 rounded-md shadow-2xs transition" name="_addanother" type="submit" value="Save and add another"/>
+          <input class="cursor-pointer px-4 py-2 text-xs font-medium text-ink-800 bg-parchment-100 hover:bg-parchment-200 border border-parchment-300 rounded-md shadow-2xs transition" name="_continue" type="submit" value="Save and continue editing"/>
+          <button class="cursor-pointer inline-flex items-center gap-2 px-6 py-2 text-xs font-bold tracking-wider uppercase text-white bg-regal-700 hover:bg-regal-800 border border-regal-800 rounded-md shadow-sm transition hover:shadow-md active:scale-[0.98]" name="_save" type="submit">
+            <svg class="w-3.5 h-3.5 text-gold-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+            </svg>
+            <span>SAVE</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- END: StickyBottomActionToolbar -->
+
+  </form>
+</main>
+<!-- END: MainContent -->
+
+<!-- BEGIN: AtelierFooter -->
+<footer class="mt-auto bg-regal-900 text-parchment-300 text-xs border-t border-gold-500/20 py-5">
+  <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="font-luxury text-gold-300 font-medium">Siddhi Vinayaka Cards</span>
+      <span class="text-regal-700">|</span>
+      <span>© 1982–2026 Siddhi Vinayaka Cards Bangalore. All rights reserved.</span>
+    </div>
+    <div class="flex items-center gap-4 text-[11px]">
+      <span>Django 5.1 Suite</span>
+      <span>•</span>
+      <span class="text-emerald-400 font-mono flex items-center gap-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        Port 8000 / Production Encrypted
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- END: AtelierFooter -->
+
+<script>
+  function toggleAdminMobileMenu(e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    var menu = document.getElementById('admin-mobile-menu');
+    var icon = document.getElementById('admin-mobile-icon');
+    if (!menu) return;
+    var isHidden = menu.classList.contains('hidden');
+    if (isHidden) {
+      menu.classList.remove('hidden');
+      if (icon) icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>';
+    } else {
+      menu.classList.add('hidden');
+      if (icon) icon.innerHTML = '<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>';
+    }
+  }
+</script>
+
+</body>
+</html>

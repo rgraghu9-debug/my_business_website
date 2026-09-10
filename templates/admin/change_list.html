@@ -1,0 +1,440 @@
+{% load i18n admin_urls static admin_list %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>{% block title %}Select {{ cl.opts.verbose_name }} to change | Siddhi Vinayaka Cards Admin Atelier{% endblock %}</title>
+
+  <!-- Google Fonts for Editorial Luxury Feel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind CSS v3 with Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            regal: {
+              900: '#380a13',
+              800: '#530f1c',
+              700: '#6d1425',
+              600: '#7a162b',
+              500: '#8e1c33',
+              100: '#faeef1',
+              50: '#fdf7f8'
+            },
+            gold: {
+              600: '#9b7430',
+              500: '#ba8c3b',
+              400: '#c89d56',
+              300: '#dfb771',
+              200: '#faecc8',
+              100: '#fef7e7'
+            },
+            parchment: {
+              50: '#fcfbfa',
+              100: '#f7f4ef',
+              200: '#ede8de',
+              300: '#ded7c9',
+              400: '#c5bbab'
+            },
+            ink: {
+              900: '#191515',
+              800: '#2b2424',
+              700: '#423b3b',
+              600: '#5e5454',
+              500: '#7f7474'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            brand: ['"Cinzel"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style data-purpose="custom-admin-styles">
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f7f4ef;
+      color: #2b2424;
+      background-image: radial-gradient(rgba(200, 157, 86, 0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+    }
+    .font-luxury {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .border-gold-emboss {
+      border: 1px solid rgba(200, 157, 86, 0.35);
+      box-shadow: 0 1px 3px rgba(35, 23, 10, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    .royal-gradient-header {
+      background: linear-gradient(90deg, #530f1c 0%, #6d1425 45%, #460c17 100%);
+    }
+    .admin-row-hover:hover {
+      background-color: #fcf8f2;
+      transition: background-color 0.15s ease-in-out;
+    }
+    /* Table inputs & checkboxes */
+    #result_list input[type="text"], #result_list select {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      border: 1px solid rgba(200, 157, 86, 0.4);
+      background-color: #fcfbfa;
+    }
+    #result_list th {
+      padding: 0.75rem 1rem;
+    }
+    #result_list td {
+      padding: 0.75rem 1rem;
+      vertical-align: middle;
+    }
+    /* Django Messages & Errors */
+    ul.messagelist li {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    ul.messagelist li.success {
+      background-color: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    ul.messagelist li.warning {
+      background-color: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    ul.messagelist li.error {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+  </style>
+
+  {% block extrahead %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-gold-200 selection:text-regal-900">
+
+<!-- BEGIN: TopHeader -->
+<header class="royal-gradient-header text-white border-b border-gold-500/30 sticky top-0 z-50 shadow-md">
+  <div class="max-w-[1920px] mx-auto px-3 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 gap-2 sm:gap-4">
+      
+      <!-- Logo & Brand Monogram -->
+      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        <a href="{% url 'admin:index' %}" class="flex items-center space-x-2 sm:space-x-3">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gold-400/60 flex items-center justify-center bg-regal-900/50 shadow-inner shrink-0">
+            <span class="font-luxury text-gold-300 font-bold text-xs sm:text-base tracking-wider">SV</span>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+              <span class="font-luxury text-base sm:text-xl lg:text-2xl font-semibold tracking-wide text-gold-300 drop-shadow-sm truncate max-w-[150px] xs:max-w-none">Siddhi Vinayaka Cards</span>
+              <span class="hidden xl:inline-block text-[10px] uppercase font-bold tracking-widest bg-gold-500/20 text-gold-300 px-2 py-0.5 rounded border border-gold-400/30">Admin Atelier</span>
+            </div>
+            <span class="hidden sm:inline-block text-[10px] sm:text-[11px] text-zinc-300/80 tracking-wider uppercase font-medium">Luxury Wedding Invitations · CMS v5.1.2</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Quick Command Bar / Search Global -->
+      <div class="hidden lg:flex items-center flex-1 max-w-lg mx-4 lg:mx-6">
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gold-300/70">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <input class="w-full pl-10 pr-12 py-1.5 bg-regal-900/60 border border-gold-400/30 rounded-md text-xs text-parchment-100 placeholder-parchment-300/60 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 transition-all" placeholder="Search records, SKUs..." type="text" id="admin-quick-search"/>
+        </div>
+      </div>
+
+      <!-- User Account & Django Controls -->
+      <div class="hidden md:flex items-center space-x-3 lg:space-x-4 text-xs shrink-0">
+        <div class="flex flex-col text-right">
+          <span class="text-parchment-200 font-semibold tracking-wide">WELCOME, <strong class="text-gold-300 font-bold tracking-wider uppercase">{{ user.get_full_name|default:user.username }}</strong></span>
+          <span class="text-[11px] text-emerald-300/90 flex items-center justify-end space-x-1">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>{% if user.is_superuser %}Superuser{% else %}Staff{% endif %}</span>
+          </span>
+        </div>
+        <div class="h-8 w-px bg-regal-800/80 border-r border-gold-500/20"></div>
+        
+        <nav class="flex items-center space-x-2.5 text-parchment-200">
+          <a class="hover:text-gold-300 font-medium transition-colors flex items-center space-x-1" href="{% url 'catalog:home' %}" target="_blank" title="Open Customer Facing E-Store">
+            <span>View Site</span>
+            <svg class="w-3.5 h-3.5 text-gold-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </a>
+          <span class="text-gold-400/40">/</span>
+          <a class="hover:text-gold-300 font-medium transition-colors" href="{% url 'admin:password_change' %}">Password</a>
+          <span class="text-gold-400/40">/</span>
+          <form action="{% url 'admin:logout' %}" method="post" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="text-rose-300 hover:text-rose-200 font-semibold transition-colors">Logout</button>
+          </form>
+        </nav>
+      </div>
+
+      <!-- Mobile Hamburger Button (md:hidden) -->
+      <div class="flex items-center space-x-2 md:hidden">
+        <button
+          type="button"
+          onclick="toggleAdminMobileMenu(event)"
+          id="admin-mobile-btn"
+          class="p-2 rounded-md bg-regal-900/80 border border-gold-400/40 text-gold-300 hover:bg-regal-800 focus:outline-none transition-colors cursor-pointer"
+          aria-label="Toggle Admin Menu"
+        >
+          <svg id="admin-mobile-icon" class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="admin-mobile-menu" class="hidden md:hidden py-3 border-t border-gold-500/20 flex flex-col gap-3">
+      <!-- User Account Info & Links -->
+      <div class="bg-regal-900/80 p-3 rounded-md border border-gold-400/20 flex flex-col gap-2.5 text-xs text-parchment-200">
+        <div class="flex items-center justify-between border-b border-gold-500/20 pb-2">
+          <span>Logged in as: <strong class="text-gold-300 uppercase">{{ user.get_full_name|default:user.username }}</strong></span>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-400/30 font-medium">{% if user.is_superuser %}Superuser{% else %}Staff{% endif %}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center pt-1 font-medium">
+          <a class="p-2 rounded bg-regal-800/80 text-gold-300 hover:bg-regal-700 transition-colors flex items-center justify-center gap-1" href="{% url 'catalog:home' %}" target="_blank">
+            <span>View Site</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </a>
+          <a class="p-2 rounded bg-regal-800/80 text-parchment-100 hover:bg-regal-700 transition-colors flex items-center justify-center" href="{% url 'admin:password_change' %}">
+            Password
+          </a>
+          <form action="{% url 'admin:logout' %}" method="post" class="w-full">
+            {% csrf_token %}
+            <button type="submit" class="w-full h-full p-2 rounded bg-rose-900/40 text-rose-200 hover:bg-rose-900/60 transition-colors font-semibold">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+<!-- END: TopHeader -->
+
+<!-- BEGIN: BreadcrumbAndStatusBar -->
+<section class="bg-parchment-100 border-b border-parchment-300 py-2.5 shadow-sm">
+  <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-3 text-xs">
+    
+    <!-- Breadcrumb Pathway -->
+    <div class="flex items-center space-x-2 text-ink-600 font-medium">
+      <a class="text-regal-600 hover:text-regal-800 font-medium flex items-center" href="{% url 'admin:index' %}">
+        <svg class="w-3.5 h-3.5 mr-1 text-gold-600" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+        </svg>
+        Home
+      </a>
+      <span class="text-parchment-400 font-bold">›</span>
+      <a class="hover:text-regal-800 transition-colors" href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{{ cl.opts.app_config.verbose_name|default:cl.opts.app_label|capfirst }}</a>
+      <span class="text-parchment-400 font-bold">›</span>
+      <span class="font-semibold text-regal-700 tracking-wide">{{ cl.opts.verbose_name_plural|capfirst }}</span>
+    </div>
+
+    <!-- Live Telemetry Chips -->
+    <div class="flex items-center space-x-3 text-[11px] text-ink-600">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gold-100 text-regal-900 border border-gold-300">
+        <span class="w-1.5 h-1.5 rounded-full bg-regal-600"></span>
+        Active Foil Press Runs: <strong class="font-bold">42</strong>
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white text-ink-800 border border-parchment-300 shadow-2xs">
+        Total Records: <strong class="font-bold text-regal-800">{{ cl.result_count }}</strong>
+      </span>
+      <span class="hidden sm:inline-block text-ink-600 font-medium">
+        Atelier Location: <span class="font-semibold text-ink-900">Bengaluru Flagship</span>
+      </span>
+    </div>
+
+  </div>
+</section>
+<!-- END: BreadcrumbAndStatusBar -->
+
+<!-- BEGIN: MainContentArea -->
+<main class="flex-1 max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+  <!-- Django Messages -->
+  {% if messages %}
+    <ul class="messagelist">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message|capfirst }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="flex flex-col lg:flex-row gap-6 items-start">
+    
+    <!-- Primary Data Section (Left Column) -->
+    <section class="flex-1 w-full min-w-0" data-purpose="primary-data-section">
+      
+      <!-- Header Banner & Primary Action Buttons -->
+      <div class="bg-white border border-gold-emboss rounded-lg p-6 mb-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-parchment-200">
+          <div>
+            <h1 class="text-2xl lg:text-3xl font-luxury font-bold text-regal-900 tracking-tight flex items-center gap-3">
+              Select {{ cl.opts.verbose_name }} to change
+              <span class="text-xs font-sans font-normal bg-regal-50 text-regal-700 border border-regal-200 px-2.5 py-0.5 rounded-full">
+                Model: {{ cl.opts.app_label }}.{{ cl.opts.object_name }}
+              </span>
+            </h1>
+            <p class="text-xs sm:text-sm text-ink-500 mt-1 font-serif italic">
+              Manage master bespoke stationery items, hot-stamped dies, paper weights, and pricing structures.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2.5 shrink-0">
+            {% if has_add_permission %}
+              <a class="inline-flex items-center gap-2 px-4 py-2 bg-regal-700 hover:bg-regal-800 text-white rounded-md text-xs font-semibold tracking-wide uppercase shadow-sm border border-gold-400 transition-all duration-150" href="{% url cl.opts|admin_urlname:'add' %}">
+                <svg class="w-4 h-4 text-gold-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+                </svg>
+                Add {{ cl.opts.verbose_name|capfirst }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Search & Action Toolbar -->
+        <div class="mt-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          <!-- Django Search Form -->
+          {% if cl.has_search %}
+            <div class="flex-1 max-w-md">
+              <form id="changelist-search" method="get" class="flex items-center gap-2">
+                <div class="relative w-full">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-ink-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                  </div>
+                  <input class="w-full pl-9 pr-3 py-2 text-xs bg-parchment-50 border border-gold-400/50 rounded-md focus:border-regal-700 focus:ring-1 focus:ring-regal-700/20 placeholder:text-ink-500/60 transition" id="searchbar" name="q" placeholder="Search by title, SKU, or details..." type="search" value="{{ cl.query }}"/>
+                </div>
+                <button class="px-4 py-2 bg-ink-800 hover:bg-ink-900 text-white text-xs font-semibold rounded-md border border-ink-900 transition-colors shrink-0" type="submit">
+                  Search
+                </button>
+              </form>
+            </div>
+          {% endif %}
+
+          <!-- Bulk Actions Form -->
+          {% if action_form and actions_on_top %}
+            <div class="flex items-center gap-2 text-xs">
+              {% admin_actions %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Master Result List Form -->
+      <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+        {% csrf_token %}
+
+        {% if cl.formset %}
+          <div>{{ cl.formset.management_form }}</div>
+        {% endif %}
+
+        <!-- Django Change List Results Table -->
+        <div class="bg-white border border-gold-emboss rounded-lg shadow-sm overflow-hidden mb-6">
+          {% result_list cl %}
+        </div>
+
+        <!-- Pagination Bar -->
+        <div class="bg-parchment-100 border border-parchment-300 rounded-lg p-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          {% pagination cl %}
+        </div>
+      </form>
+
+    </section>
+
+    <!-- Right Filter Sidebar -->
+    {% if cl.has_filters %}
+      <aside class="w-full lg:w-72 xl:w-80 shrink-0" data-purpose="django-filter-sidebar">
+        <div class="bg-white border border-gold-emboss rounded-lg shadow-sm overflow-hidden sticky top-24">
+          
+          <div class="bg-regal-800 text-white px-4 py-3 border-b border-gold-400/40 flex items-center justify-between">
+            <h2 class="font-luxury font-bold text-sm uppercase tracking-wider text-parchment-100 flex items-center gap-2">
+              <svg class="w-4 h-4 text-gold-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+              Filter {{ cl.opts.verbose_name_plural|capfirst }}
+            </h2>
+            {% if cl.has_active_filters %}
+              <a href="{{ cl.clear_all_filters_qvs }}" class="text-[11px] text-gold-200 hover:text-white underline uppercase">Clear all</a>
+            {% endif %}
+          </div>
+
+          <div class="p-4 divide-y divide-parchment-200 space-y-4 text-xs">
+            {% for spec in cl.filter_specs %}
+              <div class="pt-2">
+                <h3 class="font-luxury font-bold text-regal-900 text-xs mb-2 uppercase tracking-wider">
+                  ↓ By {{ spec.title }}
+                </h3>
+                <ul class="space-y-1 text-ink-700">
+                  {% admin_list_filter cl spec %}
+                </ul>
+              </div>
+            {% endfor %}
+          </div>
+
+        </div>
+      </aside>
+    {% endif %}
+
+  </div>
+</main>
+<!-- END: MainContentArea -->
+
+<!-- BEGIN: Footer -->
+<footer class="mt-auto border-t border-parchment-300 bg-white py-6">
+  <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-ink-500 gap-3">
+    <div class="flex items-center space-x-2">
+      <span class="font-luxury font-semibold text-regal-800 text-sm">Siddhi Vinayaka Cards</span>
+      <span>© 1982–2026 Siddhi Vinayaka Cards Bangalore. All rights reserved.</span>
+    </div>
+    <div class="flex items-center space-x-4 text-[11px] text-ink-600">
+      <span>Django 5.1 Administration</span>
+      <span>•</span>
+      <span class="text-emerald-700 font-medium">Heidelberg Press Sync: Connected</span>
+      <span>•</span>
+      <a class="hover:text-regal-700 transition-colors" href="{% url 'catalog:contact_us' %}" target="_blank">Atelier Support</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleAdminMobileMenu(e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    var menu = document.getElementById('admin-mobile-menu');
+    var icon = document.getElementById('admin-mobile-icon');
+    if (!menu) return;
+    var isHidden = menu.classList.contains('hidden');
+    if (isHidden) {
+      menu.classList.remove('hidden');
+      if (icon) icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>';
+    } else {
+      menu.classList.add('hidden');
+      if (icon) icon.innerHTML = '<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>';
+    }
+  }
+</script>
+
+</body>
+</html>

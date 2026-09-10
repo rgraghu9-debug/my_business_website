@@ -1,0 +1,145 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+
+{% block title %}All Invitation Cards Collection — Siddhi Vinayaka Cards{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+
+
+
+  <!-- ── Page Introduction Banner ────────────────────── -->
+  <section class="w-full bg-surface py-space-xl md:py-space-2xl px-gutter-desktop">
+    <div class="max-w-container-max mx-auto text-center flex flex-col items-center">
+      <div class="flex items-center justify-center gap-space-xs mb-space-2xs">
+        <span class="w-8 h-[1px] bg-outline-variant"></span>
+        <span class="font-label-sm text-xs uppercase tracking-widest text-primary font-bold">Artisanal Wedding Stationery</span>
+        <span class="w-8 h-[1px] bg-outline-variant"></span>
+      </div>
+      <h1 class="font-headline-lg text-3xl md:text-5xl text-primary font-bold max-w-3xl mb-space-xs">
+        All Invitation Cards
+      </h1>
+      <p class="font-body-lg text-sm md:text-base text-on-surface-variant max-w-3xl mx-auto mb-space-md">
+        Discover the perfect wedding card for every tradition, style, and celebration. Our diverse collection features exquisite designs crafted with authentic royal gold foil, botanical embossing, and precision hand-finishing.
+      </p>
+      {% if search_query %}
+        <div class="bg-surface-container-low px-4 py-2 rounded-full text-xs font-bold text-primary">
+          Showing search results for: "{{ search_query }}" (<a href="{% url 'catalog:all_invitations' %}" class="underline text-on-surface-variant">Clear search</a>)
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ── Main Product Grid Section ───────────────────── -->
+  <section class="w-full bg-surface py-space-xl px-gutter-desktop border-t border-surface-variant/40">
+    <div class="max-w-container-max mx-auto">
+
+      <!-- Product Counter -->
+      <div class="flex items-center justify-between mb-space-lg">
+        <p class="font-body-md text-xs text-on-surface-variant">
+          Showing <span class="font-bold text-on-surface font-label-lg">{{ total_count }}</span> handcrafted ceremonial designs
+        </p>
+        <div class="flex items-center gap-1 text-secondary font-label-sm text-xs uppercase font-bold">
+          <span class="material-symbols-outlined text-[18px]">verified</span>
+          <span>Physical Samples Available for All Listed Designs</span>
+        </div>
+      </div>
+
+      <!-- 4-Column Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-space-lg">
+        {% for design in designs %}
+          <div class="group bg-surface-container-lowest rounded-xl p-space-sm flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-variant/30">
+            <div>
+              <div class="relative w-full aspect-[4/5] bg-surface-container-low rounded-lg overflow-hidden mb-space-sm">
+                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ design.name }}" src="{{ design.get_image_url }}" />
+                {% if design.badge %}
+                  <span class="absolute top-2 left-2 bg-primary text-on-primary font-label-sm text-xs px-2 py-0.5 rounded shadow-sm font-bold">{{ design.badge }}</span>
+                {% endif %}
+                <a href="{% url 'catalog:design_detail' design.pk %}" class="absolute top-2 right-2 w-8 h-8 bg-surface/90 hover:bg-surface text-primary rounded-full flex items-center justify-center shadow-sm transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">favorite</span>
+                </a>
+                <div class="absolute inset-x-2 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                  <a href="{% url 'catalog:design_detail' design.pk %}" class="w-full text-center bg-primary text-on-primary font-label-sm text-xs py-1.5 rounded shadow hover:bg-primary-container transition-colors font-bold">Quick View</a>
+                </div>
+              </div>
+              <span class="font-label-sm text-xs text-on-surface-variant uppercase tracking-wider block mb-1">SKU: {{ design.sku }}</span>
+              <h3 class="font-headline-sm text-base font-bold text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-1">
+                <a href="{% url 'catalog:design_detail' design.pk %}">{{ design.name }}</a>
+              </h3>
+              <div class="flex items-center gap-1 mb-space-xs">
+                <div class="flex text-secondary text-[14px]">
+                  <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star_half</span>
+                </div>
+                <span class="font-body-sm text-xs text-on-surface-variant">({{ design.reviews_count }})</span>
+              </div>
+            </div>
+            <div class="pt-space-xs flex items-center justify-between border-t border-surface-variant/30">
+              <div class="flex flex-col">
+                <div class="flex items-baseline gap-1.5">
+                  <span class="font-price-lg text-base text-primary font-bold">{{ design.formatted_price }}</span>
+                </div>
+                <span class="font-body-sm text-[10px] text-on-surface-variant">Includes Inserts</span>
+              </div>
+              <a href="{% url 'catalog:design_detail' design.pk %}" class="bg-surface-container-low hover:bg-secondary-container hover:text-on-secondary-container text-primary p-2 rounded-lg transition-colors" title="Order Sample Card">
+                <span class="material-symbols-outlined text-[20px]">mark_email_read</span>
+              </a>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-span-full py-12 text-center bg-surface-container-low rounded-xl">
+            <span class="text-4xl block mb-2">💐</span>
+            <h3 class="font-headline-sm text-xl text-primary font-bold">No invitation cards match your search</h3>
+            <a href="{% url 'catalog:all_invitations' %}" class="inline-block mt-4 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold text-xs">View All Invitation Cards</a>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Interactive FAQs Section ────────────────────── -->
+  <section class="w-full bg-surface-container-low py-space-2xl px-gutter-desktop border-t border-surface-variant/40">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-space-xl">
+        <h2 class="font-headline-lg text-2xl md:text-3xl text-primary font-bold mb-space-2xs">Frequently Asked Questions</h2>
+        <p class="font-body-md text-sm text-on-surface-variant">Everything you need to know about cards, samples, proofs, and shipping.</p>
+      </div>
+
+      <div class="flex flex-col gap-space-xs">
+        <details class="group bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all cursor-pointer">
+          <summary class="flex items-center justify-between font-headline-sm text-base font-bold text-on-surface list-none group-hover:text-primary transition-colors">
+            <span>How far in advance should I order my wedding invitation cards?</span>
+            <span class="material-symbols-outlined text-primary group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <div class="mt-space-sm font-body-md text-xs text-on-surface-variant leading-relaxed">
+            We recommend placing your order 6 to 8 weeks before you plan to distribute them. This provides comfortable time for digital proof approvals, hot-foil embossing, and door courier delivery.
+          </div>
+        </details>
+        <details class="group bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all cursor-pointer">
+          <summary class="flex items-center justify-between font-headline-sm text-base font-bold text-on-surface list-none group-hover:text-primary transition-colors">
+            <span>Can I order a physical sample before placing the full bulk order?</span>
+            <span class="material-symbols-outlined text-primary group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <div class="mt-space-sm font-body-md text-xs text-on-surface-variant leading-relaxed">
+            Yes, absolutely! You can order physical sample swatches. Sample costs are fully reimbursed on your bulk order of 100 cards or more.
+          </div>
+        </details>
+        <details class="group bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all cursor-pointer">
+          <summary class="flex items-center justify-between font-headline-sm text-base font-bold text-on-surface list-none group-hover:text-primary transition-colors">
+            <span>What happens if my wedding date or venue details change?</span>
+            <span class="material-symbols-outlined text-primary group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <div class="mt-space-sm font-body-md text-xs text-on-surface-variant leading-relaxed">
+            Text and date changes are completely free during the digital proofing phase.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

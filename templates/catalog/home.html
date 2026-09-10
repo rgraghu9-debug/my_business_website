@@ -1,0 +1,333 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+
+{% block title %}Siddhi Vinayaka Cards — Handcrafted Heritage & Luxury Invitations{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+
+  <!-- ── Hero Section ───────────────────────────────── -->
+  <section class="relative w-full overflow-hidden min-h-[520px] md:min-h-[580px] flex items-center justify-center">
+    <img alt="Siddhi Vinayaka Cards Heritage Wedding Stationery Craft" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKyh6uzi7m6R-hZ59Bc1ip7XftlQ3tNuC8T6T9XlLoIcwU1uCgm3vsACyNd3ODWmS6AZenMcOsfGS-HH29BeEag-fnebv7H3G8ZQBokcx17lxU85Pf9GwHWtaJx6ABqoJo-0pfiGB2Kqdnz34ZMfkbSMdY_ARXVBNa-4h_NSJZJNUq6ziMmtGO6HjfKOj-It1-1s7W85YgyGbfdbIzjhKcf36zyxeI-aQS7mLOVs8fjOV-PCZWjAaKNw" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-primary/80 to-black/60"></div>
+    <div class="relative z-10 max-w-container-max mx-auto px-gutter-desktop py-space-3xl text-center flex flex-col items-center justify-center">
+      <h1 class="font-display-xl text-4xl md:text-6xl text-on-primary tracking-tight leading-tight max-w-3xl mb-space-sm font-bold">
+        <span class="block font-serif text-white drop-shadow-md">Siddhi Vinayaka</span>
+        <span class="block italic font-normal text-secondary-container text-2xl md:text-4xl mt-1">Cards</span>
+      </h1>
+      <div class="w-24 h-[2px] bg-[#fed65b] my-space-md rounded-full shadow-sm"></div>
+      <p class="font-sans text-base md:text-lg text-[#fed65b] uppercase tracking-[0.15em] font-bold max-w-2xl text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+        Heritage &amp; Luxury Invitations for Sacred Celebrations
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Highlight Banner: Royal Luxe Collection ────── -->
+  <section class="w-full bg-primary text-on-primary py-space-xl my-space-lg relative overflow-hidden">
+    <div class="max-w-container-max mx-auto px-gutter-desktop relative z-10 flex flex-col md:flex-row items-center justify-between gap-space-lg">
+      <div class="flex items-center gap-space-md">
+        <div class="w-16 h-16 rounded-xl bg-primary-container flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-secondary-container text-[36px]">auto_awesome</span>
+        </div>
+        <div>
+          <span class="font-label-sm text-xs uppercase tracking-widest text-secondary-container font-semibold">The Grand Trunk &amp; Luxe Box Series</span>
+          <h2 class="font-headline-lg text-2xl md:text-3xl leading-tight font-bold">Hardbound Suede, Mithai Ensembles &amp; Gold Leaf Scrolls</h2>
+        </div>
+      </div>
+      <a class="bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed hover:text-on-secondary px-space-lg py-space-sm rounded-lg font-label-lg text-base whitespace-nowrap shadow-md transition-all font-bold" href="{% url 'catalog:all_invitations' %}">
+        Explore Collection →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── New Arrivals Grid ───────────────────────────── -->
+  <section class="max-w-container-max mx-auto px-gutter-desktop py-space-2xl w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-xs">
+      <div>
+        <span class="font-label-sm text-xs text-secondary uppercase tracking-widest font-bold block mb-space-2xs">Fresh Off The Artisanal Press</span>
+        <h2 class="font-headline-lg text-2xl md:text-3xl text-primary font-bold">New Arrivals for Nuptial Seasons</h2>
+      </div>
+      <a href="{% url 'catalog:all_invitations' %}" class="text-primary hover:text-secondary font-label-md font-bold flex items-center gap-1 transition-colors">
+        View All Designs <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+      {% for design in new_arrivals %}
+        <div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col border border-surface-variant/30">
+          <div class="relative overflow-hidden bg-surface-container aspect-[4/3]">
+            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ design.name }}" src="{{ design.get_image_url }}" />
+            {% if design.badge %}
+              <span class="absolute top-3 left-3 bg-primary text-on-primary font-label-sm text-xs px-space-xs py-space-2xs rounded shadow font-bold">
+                {{ design.badge }}
+              </span>
+            {% endif %}
+          </div>
+          <div class="p-space-md flex flex-col flex-1 justify-between">
+            <div>
+              <div class="flex items-center justify-between text-on-surface-variant font-label-sm text-xs mb-space-2xs">
+                <span>SKU: {{ design.sku|default:"RJT-900" }}</span>
+                <div class="flex items-center text-secondary">
+                  <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="font-bold ml-0.5">{{ design.rating }}</span>
+                  <span class="text-on-surface-variant ml-1">({{ design.reviews_count }})</span>
+                </div>
+              </div>
+              <h3 class="font-headline-sm text-lg font-bold text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+                <a href="{% url 'catalog:design_detail' design.pk %}">{{ design.name }}</a>
+              </h3>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-1 line-clamp-2">
+                {{ design.subtitle|default:design.description|truncatewords:10 }}
+              </p>
+            </div>
+            <div class="mt-space-md pt-space-sm flex items-center justify-between border-t border-surface-variant/40">
+              <div class="flex items-baseline gap-space-xs">
+                <span class="font-price-lg text-lg text-primary font-bold">{{ design.formatted_price }}</span>
+              </div>
+              <a href="{% url 'catalog:design_detail' design.pk %}" class="bg-surface-container hover:bg-primary hover:text-on-primary text-primary px-space-sm py-space-2xs rounded font-label-md text-xs font-bold transition-colors">
+                Customise
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Catalogue by Budget Tier ───────────────────── -->
+  <section class="max-w-container-max mx-auto px-gutter-desktop py-space-2xl w-full" id="catalogue">
+    <div class="text-center max-w-xl mx-auto mb-space-xl">
+      <span class="font-label-sm text-xs text-secondary uppercase tracking-widest font-bold block mb-space-2xs">Tailored to Your Investment</span>
+      <h2 class="font-headline-lg text-2xl md:text-3xl text-primary font-bold mb-space-xs">Explore Our Catalogue</h2>
+      <p class="font-body-md text-sm text-on-surface-variant">Fine ceremonial stationery engineered for every wedding scale without compromising paper gravitas.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+      <!-- Tier 1 -->
+      <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-xl transition-all flex flex-col border border-surface-variant/30">
+        <div class="aspect-[16/10] rounded-lg overflow-hidden mb-space-md bg-surface-container">
+          <img class="w-full h-full object-cover" alt="Standard range wedding invitation card" src="/media/designs/invitation_01.jpeg" />
+        </div>
+        <div class="flex items-center justify-between mb-space-2xs">
+          <span class="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">Standard Range</span>
+          <span class="font-label-sm text-xs bg-surface-container px-space-xs py-space-2xs rounded">₹10 – ₹30</span>
+        </div>
+        <h3 class="font-headline-sm text-xl text-primary font-bold mb-space-xs">Affordable Elegance</h3>
+        <p class="font-body-sm text-xs text-on-surface-variant mb-space-md flex-1">
+          Handcrafted ceremonial Ganesha cards featuring gold hot-foil leafing, premium textured paper, sacred verses, and matching outer envelopes.
+        </p>
+        <a class="w-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary py-space-xs rounded-lg font-label-md text-xs font-bold text-center transition-colors block" href="{% url 'catalog:all_invitations' %}">
+          Browse Affordable Cards
+        </a>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-md hover:shadow-xl transition-all flex flex-col relative border-2 border-primary/20">
+        <span class="absolute top-4 right-4 bg-primary text-on-primary font-label-sm text-xs px-space-xs py-space-2xs rounded font-bold">Most Popular</span>
+        <div class="aspect-[16/10] rounded-lg overflow-hidden mb-space-md bg-surface-container">
+          <img class="w-full h-full object-cover" alt="Semi-bespoke laser cut gatefold invitation" src="/media/designs/invitation_14.jpeg" />
+        </div>
+        <div class="flex items-center justify-between mb-space-2xs">
+          <span class="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">Semi-Bespoke Range</span>
+          <span class="font-label-sm text-xs bg-surface-container px-space-xs py-space-2xs rounded">₹30 – ₹75</span>
+        </div>
+        <h3 class="font-headline-sm text-xl text-primary font-bold mb-space-xs">Mid-Range Heritage</h3>
+        <p class="font-body-sm text-xs text-on-surface-variant mb-space-md flex-1">
+          Laser-cut gatefold door invitations, 24K gold foil hot stamping, multi-layer inserts, metallic pull-out envelopes, and coordinated itineraries.
+        </p>
+        <a class="w-full bg-primary text-on-primary hover:bg-primary-container py-space-xs rounded-lg font-label-md text-xs font-bold text-center transition-colors shadow-sm block" href="{% url 'catalog:all_invitations' %}">
+          Browse Mid-Range Cards
+        </a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-xl transition-all flex flex-col border border-surface-variant/30">
+        <div class="aspect-[16/10] rounded-lg overflow-hidden mb-space-md bg-surface-container">
+          <img class="w-full h-full object-cover" alt="High luxury padded box wedding suite" src="/media/designs/invitation_28.jpeg" />
+        </div>
+        <div class="flex items-center justify-between mb-space-2xs">
+          <span class="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">High Luxury Range</span>
+          <span class="font-label-sm text-xs bg-surface-container px-space-xs py-space-2xs rounded">₹100+</span>
+        </div>
+        <h3 class="font-headline-sm text-xl text-primary font-bold mb-space-xs">Premium Royal Luxe</h3>
+        <p class="font-body-sm text-xs text-on-surface-variant mb-space-md flex-1">
+          Hardbound raw silk padded boxes, velvet folio suites, gold die-cut monogram plates, sweet box pouches, and master calligraphy.
+        </p>
+        <a class="w-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary py-space-xs rounded-lg font-label-md text-xs font-bold text-center transition-colors block" href="{% url 'catalog:all_invitations' %}">
+          Browse Premium Boxes
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Process Stepper: 5 Steps Journey ────────────── -->
+  <section class="w-full bg-surface-container-low py-space-3xl">
+    <div class="max-w-container-max mx-auto px-gutter-desktop">
+      <div class="text-center max-w-xl mx-auto mb-space-2xl">
+        <span class="font-label-sm text-xs text-secondary uppercase tracking-widest font-bold block mb-space-2xs">Effortless Perfection</span>
+        <h2 class="font-headline-lg text-2xl md:text-3xl text-primary font-bold mb-space-xs">Your Invitation In Just Five Steps</h2>
+        <p class="font-body-md text-sm text-on-surface-variant">From first consultation to final card handover, we make wedding stationery seamless.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-space-md relative">
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col items-center text-center">
+          <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-sm text-lg font-bold mb-space-md shadow-md">1</div>
+          <h4 class="font-headline-sm text-base font-bold text-primary mb-space-2xs">Choose Invitation</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant">Browse our online catalogue or inspect physical sample swatches directly with our team.</p>
+        </div>
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col items-center text-center">
+          <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-sm text-lg font-bold mb-space-md shadow-md">2</div>
+          <h4 class="font-headline-sm text-base font-bold text-primary mb-space-2xs">Share Details</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant">Submit bride, groom, family names, and event itineraries via WhatsApp or contact form.</p>
+        </div>
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col items-center text-center">
+          <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-sm text-lg font-bold mb-space-md shadow-md">3</div>
+          <h4 class="font-headline-sm text-base font-bold text-primary mb-space-2xs">Approve Design</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant">Receive 3D digital PDF proofs with unlimited revisions until your family is 100% delighted.</p>
+        </div>
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col items-center text-center">
+          <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-sm text-lg font-bold mb-space-md shadow-md">4</div>
+          <h4 class="font-headline-sm text-base font-bold text-primary mb-space-2xs">Printing Begins</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant">Precision gold foil hot-stamping, UV varnishing, and artisanal edge-gilding.</p>
+        </div>
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col items-center text-center">
+          <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-sm text-lg font-bold mb-space-md shadow-md">5</div>
+          <h4 class="font-headline-sm text-base font-bold text-primary mb-space-2xs">Delivery of the Cards</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant">Carefully inspected, neatly packaged, and handed over ready for your wedding celebrations.</p>
+        </div>
+      </div>
+
+      <!-- Live WhatsApp Helper Box -->
+      <div class="mt-space-2xl bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-lg border border-primary/10">
+        <div class="flex items-center gap-space-md">
+          <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px]">support_agent</span>
+          </div>
+          <div>
+            <h4 class="font-headline-sm text-lg font-bold text-primary">Need urgent printing within 48 hours?</h4>
+            <p class="font-body-sm text-xs text-on-surface-variant">Our express artisan press handles immediate wedding invitations without sacrificing quality.</p>
+          </div>
+        </div>
+        <a class="bg-[#25d366] text-white hover:bg-[#20ba5a] px-space-lg py-space-sm rounded-lg font-label-lg text-sm font-bold whitespace-nowrap shadow-md transition-all flex items-center gap-space-xs" href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Customer Testimonials ───────────────────────── -->
+  <section class="w-full bg-surface-container py-space-3xl mb-0">
+    <div class="max-w-container-max mx-auto px-gutter-desktop">
+      <div class="text-center max-w-xl mx-auto mb-space-2xl">
+        <div class="flex justify-center text-secondary gap-1 mb-space-xs">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+        </div>
+        <h2 class="font-headline-lg text-2xl md:text-3xl text-primary font-bold mb-space-xs">Words from Our Families</h2>
+        <p class="font-body-md text-sm text-on-surface-variant">Over four decades of celebrating India's grandest wedding memories.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between border border-surface-variant/30">
+          <p class="font-body-md text-sm text-on-surface leading-relaxed mb-space-md italic">
+            "The padded silk wedding invitation exceeded our expectations completely! Every relative called us asking where we made the cards. The gold foiling has an undeniable authentic royal shine."
+          </p>
+          <div>
+            <span class="font-headline-sm text-base font-bold text-primary block">Darshini &amp; Karthik</span>
+            <span class="font-body-sm text-xs text-on-surface-variant">Bengaluru • Bride Groom Suite</span>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between border border-surface-variant/30">
+          <p class="font-body-md text-sm text-on-surface leading-relaxed mb-space-md italic">
+            "The premium finish and elegant designs made our wedding truly special. The consultant on WhatsApp was exceptionally patient with all our family spelling revisions!"
+          </p>
+          <div>
+            <span class="font-headline-sm text-base font-bold text-primary block">Gokul &amp; Sneha Das</span>
+            <span class="font-body-sm text-xs text-on-surface-variant">Chennai • Rajputana Heritage Card</span>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between border border-surface-variant/30">
+          <p class="font-body-md text-sm text-on-surface leading-relaxed mb-space-md italic">
+            "Living in London, we ordered our cards online with Siddhi Vinayaka Cards. International DHL shipment arrived packed pristinely in double bubble boxes without a single bend. World-class service."
+          </p>
+          <div>
+            <span class="font-headline-sm text-base font-bold text-primary block">Mohan &amp; Ananya Kumar</span>
+            <span class="font-body-sm text-xs text-on-surface-variant">London, UK • Boxed Suite</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Homepage Google Maps & Store Location Section ── -->
+  <section class="w-full py-space-3xl px-gutter-desktop bg-surface border-t border-surface-variant/40">
+    <div class="max-w-container-max mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl items-center">
+        <!-- Left Details -->
+        <div class="lg:col-span-5 flex flex-col gap-space-md">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary w-fit">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            <span class="font-label-sm text-xs uppercase tracking-wider font-bold">Visit Our Flagship Store</span>
+          </div>
+          <h2 class="font-headline-lg text-2xl md:text-4xl text-primary font-bold">
+            Siddhi Vinayaka Cards
+          </h2>
+          <div class="p-space-lg bg-surface-container-lowest rounded-xl border-l-4 border-primary shadow-sm flex flex-col gap-space-xs">
+            <span class="font-label-sm text-xs uppercase text-secondary font-bold">Store Address</span>
+            <p class="font-headline-sm text-base md:text-lg font-bold text-primary leading-snug">
+              #5-1-997, Koti, Putlibowli, Gowliguda, Hyderabad - 500095, Telangana
+            </p>
+            <p class="font-body-sm text-xs text-on-surface-variant font-semibold">
+              📍 Landmark: Near Ram Mandir
+            </p>
+          </div>
+
+          <div class="p-space-lg bg-surface-container-lowest rounded-xl border-l-4 border-secondary shadow-sm flex flex-col gap-space-xs">
+            <span class="font-label-sm text-xs uppercase text-secondary font-bold">Phone Numbers</span>
+            <div class="flex flex-col gap-1 text-base font-bold text-primary">
+              <a href="tel:9618022264" class="hover:underline flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">phone_in_talk</span> +91 96180 22264
+              </a>
+              <a href="tel:8639093095" class="hover:underline flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">phone_in_talk</span> +91 86390 93095
+              </a>
+            </div>
+            <p class="font-body-sm text-xs text-on-surface-variant">Store Timing: 10:00 AM – 8:00 PM IST (Mon – Sun)</p>
+          </div>
+
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=5-1-997+Koti+Putlibowli+Gowliguda+Hyderabad+500095+Telangana+Near+Ram+Mandir"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary hover:bg-primary-container px-space-lg py-space-sm rounded-lg font-bold text-sm shadow-md transition-colors w-full md:w-fit"
+          >
+            <span class="material-symbols-outlined text-[20px]">map</span> Get Directions on Google Maps →
+          </a>
+        </div>
+
+        <!-- Right Map Embed -->
+        <div class="lg:col-span-7 rounded-2xl overflow-hidden shadow-xl border border-surface-variant/40 bg-surface-container-low h-80 md:h-[420px]">
+          <iframe
+            class="w-full h-full"
+            src="https://maps.google.com/maps?q=5-1-997%2C+Koti%2C+Putlibowli%2C+Gowliguda%2C+Hyderabad+-+500095%2C+Telangana+(Near+Ram+Mandir)&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Siddhi Vinayaka Cards Store Google Map Location"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

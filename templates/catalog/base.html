@@ -1,0 +1,444 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{% block meta_description %}Siddhi Vinayaka Cards — Handcrafted Ceremonial Stationery & Luxury Invitations for Sacred Celebrations.{% endblock %}" />
+  <title>{% block title %}Siddhi Vinayaka Cards — Heritage & Luxury Invitations{% endblock %}</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Local Custom CSS Stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+  <!-- Tailwind CSS Configuration -->
+  <script>
+    window.tailwind = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#fbf9f6",
+            "secondary-container": "#fed65b",
+            "surface-variant": "#e4e2df",
+            "on-surface": "#1b1c1a",
+            "surface-container-lowest": "#ffffff",
+            "background": "#fbf9f6",
+            "surface-bright": "#fbf9f6",
+            "error": "#ba1a1a",
+            "secondary": "#735c00",
+            "inverse-primary": "#ffb2b8",
+            "on-surface-variant": "#564243",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#5a0013",
+            "surface-container-highest": "#e4e2df",
+            "secondary-fixed": "#ffe088",
+            "tertiary-fixed-dim": "#ffb3b4",
+            "secondary-fixed-dim": "#e9c349",
+            "on-background": "#1b1c1a",
+            "outline-variant": "#ddc0c1",
+            "inverse-surface": "#30312f",
+            "surface-container": "#efeeeb",
+            "primary-fixed-dim": "#ffb2b8",
+            "on-tertiary-fixed": "#40000b",
+            "on-secondary-fixed": "#241a00",
+            "surface-container-low": "#f5f3f0",
+            "on-secondary-container": "#745c00",
+            "on-tertiary-container": "#ff868c",
+            "surface-container-high": "#eae8e5",
+            "on-error": "#ffffff",
+            "primary-fixed": "#ffdadb",
+            "on-secondary-fixed-variant": "#574500",
+            "on-primary": "#ffffff",
+            "primary": "#590018",
+            "on-primary-container": "#ff8592",
+            "on-error-container": "#93000a",
+            "surface-dim": "#dbdad7",
+            "outline": "#8a7172",
+            "on-tertiary-fixed-variant": "#881c2b",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed-variant": "#851f33",
+            "surface-tint": "#a53749",
+            "inverse-on-surface": "#f2f0ed",
+            "error-container": "#ffdad6",
+            "tertiary-container": "#7d1224",
+            "primary-container": "#7a162b",
+            "on-primary-fixed": "#40000f",
+            "tertiary-fixed": "#ffdada"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-xs": "0.5rem",
+            "space-3xl": "4.5rem",
+            "space-2xl": "3rem",
+            "space-lg": "1.5rem",
+            "space-2xs": "0.25rem",
+            "gutter-mobile": "0.75rem",
+            "space-sm": "0.75rem",
+            "space-xl": "2rem",
+            "container-max": "80rem",
+            "gutter-desktop": "1.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Playfair Display", "serif"],
+            "headline-lg": ["Playfair Display", "serif"],
+            "headline-sm": ["Playfair Display", "serif"],
+            "display-xl": ["Playfair Display", "serif"],
+            "body-md": ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
+
+  <!-- ── Header ─────────────────────────────────────── -->
+  <header class="fixed top-0 left-0 right-0 z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <!-- Top Announcement Bar -->
+    <div class="bg-primary text-on-primary py-1.5 px-gutter-desktop">
+      <div class="max-w-container-max mx-auto flex items-center justify-center text-center">
+        <p class="font-label-sm text-[11px] md:text-xs tracking-wider uppercase truncate">
+          ✦ 40,000+ Happy Customers | Free Sample Kit | Call: +91 96180 22264 / +91 86390 93095 ✦
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <div class="bg-surface border-b border-surface-variant/40 relative">
+      <div class="max-w-container-max mx-auto px-gutter-desktop py-2.5">
+        <div class="flex items-center justify-between gap-4">
+          
+          <!-- Left: Logo & Company Name -->
+          <a href="{% url 'catalog:home' %}" class="flex items-center gap-2.5 sm:gap-space-sm group shrink-0">
+            <div class="w-9 h-9 rounded-full bg-primary text-secondary-container flex items-center justify-center font-serif text-lg font-bold shadow-sm">
+              S
+            </div>
+            <div class="flex flex-col">
+              <span class="font-headline-sm text-sm sm:text-base text-primary leading-tight font-bold group-hover:text-secondary transition-colors">
+                Siddhi Vinayaka Cards
+              </span>
+              <span class="font-label-sm text-[9px] sm:text-[10px] text-on-surface-variant uppercase tracking-widest">
+                Heritage &amp; Luxury Invitations
+              </span>
+            </div>
+          </a>
+
+          <!-- Middle: Desktop Navigation Links & Compact Search Bar -->
+          <div class="hidden md:flex items-center gap-6 lg:gap-8">
+            <nav class="flex items-center gap-5 lg:gap-6 text-sm font-medium">
+              <a
+                class="whitespace-nowrap transition-colors {% if request.resolver_match.url_name == 'home' %}text-primary font-bold border-b-2 border-primary pb-0.5{% else %}text-on-surface-variant hover:text-primary{% endif %}"
+                href="{% url 'catalog:home' %}"
+              >
+                Home
+              </a>
+              <a
+                class="whitespace-nowrap transition-colors {% if request.resolver_match.url_name == 'all_invitations' %}text-primary font-bold border-b-2 border-primary pb-0.5{% else %}text-on-surface-variant hover:text-primary{% endif %}"
+                href="{% url 'catalog:all_invitations' %}"
+              >
+                All Invitations
+              </a>
+              <a
+                class="whitespace-nowrap transition-colors {% if request.resolver_match.url_name == 'contact_us' %}text-primary font-bold border-b-2 border-primary pb-0.5{% else %}text-on-surface-variant hover:text-primary{% endif %}"
+                href="{% url 'catalog:contact_us' %}"
+              >
+                Contact Us
+              </a>
+            </nav>
+
+            <!-- Compact Search Bar -->
+            <div class="w-44 lg:w-56">
+              <form action="{% url 'catalog:all_invitations' %}" method="get" class="relative flex items-center">
+                <span class="material-symbols-outlined absolute left-2.5 text-on-surface-variant pointer-events-none text-[16px]">search</span>
+                <input
+                  name="q"
+                  value="{{ search_query|default:'' }}"
+                  class="w-full pl-8 pr-3 py-1 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-1 focus:ring-primary border border-surface-variant/40"
+                  placeholder="Search cards..."
+                  type="text"
+                />
+              </form>
+            </div>
+          </div>
+
+          <!-- Right: WhatsApp, Admin & Mobile Hamburger Toggle -->
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <!-- Official WhatsApp Icon -->
+            <a
+              href="https://wa.me/{{ whatsapp_number|default:'919618022264' }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-9 h-9 rounded-full bg-[#25d366] text-white flex items-center justify-center hover:bg-[#20ba5a] transition-all shadow-sm"
+              title="WhatsApp"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </a>
+
+            <!-- Admin Login Icon -->
+            <a
+              href="/admin/"
+              class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container transition-colors shadow-sm"
+              title="Admin Login"
+              aria-label="Admin Login"
+            >
+              <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+            </a>
+
+            <!-- Mobile Hamburger Button -->
+            <button
+              id="hamburger"
+              type="button"
+              onclick="toggleMobileMenu(event)"
+              class="md:hidden w-9 h-9 rounded-lg bg-surface-container text-primary flex items-center justify-center hover:bg-surface-container-high focus:outline-none transition-colors border border-surface-variant/40 cursor-pointer"
+              aria-label="Toggle Navigation Menu"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined text-[22px] pointer-events-none" id="hamburger-icon">menu</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Mobile Navigation Dropdown Menu -->
+        <div id="navLinks" class="hidden md:hidden pt-3 pb-2 border-t border-surface-variant/30 mt-2.5 flex flex-col gap-3">
+          <!-- Mobile Search Bar -->
+          <form action="{% url 'catalog:all_invitations' %}" method="get" class="relative flex items-center w-full">
+            <span class="material-symbols-outlined absolute left-3 text-on-surface-variant pointer-events-none text-[18px]">search</span>
+            <input
+              name="q"
+              value="{{ search_query|default:'' }}"
+              class="w-full pl-9 pr-3 py-2 bg-surface-container-low rounded-lg font-body-sm text-xs text-on-surface placeholder:text-on-surface-variant focus:outline-none border border-surface-variant/40"
+              placeholder="Search wedding cards..."
+              type="text"
+            />
+          </form>
+
+          <!-- Mobile Links -->
+          <nav class="flex flex-col gap-1 text-sm font-medium">
+            <a
+              class="px-3 py-2 rounded-lg transition-colors flex items-center justify-between {% if request.resolver_match.url_name == 'home' %}bg-primary/10 text-primary font-bold{% else %}text-on-surface-variant hover:bg-surface-container{% endif %}"
+              href="{% url 'catalog:home' %}"
+            >
+              <span>Home</span>
+              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+            </a>
+            <a
+              class="px-3 py-2 rounded-lg transition-colors flex items-center justify-between {% if request.resolver_match.url_name == 'all_invitations' %}bg-primary/10 text-primary font-bold{% else %}text-on-surface-variant hover:bg-surface-container{% endif %}"
+              href="{% url 'catalog:all_invitations' %}"
+            >
+              <span>All Invitations</span>
+              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+            </a>
+            <a
+              class="px-3 py-2 rounded-lg transition-colors flex items-center justify-between {% if request.resolver_match.url_name == 'contact_us' %}bg-primary/10 text-primary font-bold{% else %}text-on-surface-variant hover:bg-surface-container{% endif %}"
+              href="{% url 'catalog:contact_us' %}"
+            >
+              <span>Contact Us</span>
+              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+            </a>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Django Messages ─────────────────────────── -->
+  {% if messages %}
+    <div class="fixed top-32 right-4 z-50 flex flex-col gap-2 max-w-sm">
+      {% for message in messages %}
+        <div class="p-4 rounded-lg bg-surface-container-lowest shadow-lg border-l-4 border-primary text-on-surface font-body-sm flex items-center justify-between">
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- ── Page Content ────────────────────────────── -->
+  <main class="w-full pt-[82px] bg-surface">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ── Floating WhatsApp Button ────────────────── -->
+  <a
+    href="https://wa.me/{{ whatsapp_number|default:'919618022264' }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 group"
+    title="Chat on WhatsApp"
+    aria-label="WhatsApp"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ── Footer ──────────────────────────────────── -->
+  <footer class="w-full bg-surface-container-low text-on-surface border-t border-surface-variant/50">
+    <!-- Royal Privileges Club Banner -->
+    <div class="bg-primary text-on-primary py-space-2xl px-gutter-desktop">
+      <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+        <div class="lg:col-span-7">
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container block mb-space-2xs">Royal Privileges Club</span>
+          <h3 class="font-headline-lg text-headline-lg text-on-primary mb-space-xs">Curated Splendour for Your Auspicious Day</h3>
+          <p class="font-body-md text-body-md text-on-primary/90 max-w-xl">
+            Join our exclusive wedding circle. Receive complimentary invitation samples, typography design guides, and private appointments with our royal stationery master craftspeople.
+          </p>
+        </div>
+        <div class="lg:col-span-5">
+          <form onsubmit="event.preventDefault(); alert('Thank you for joining the Royal Privileges Club!');" class="flex flex-col sm:flex-row gap-space-xs">
+            <input class="flex-1 px-space-md py-space-sm bg-surface rounded-lg font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none" placeholder="Enter your wedding email ID..." type="email" required />
+            <button type="submit" class="bg-secondary text-on-secondary hover:bg-secondary-container hover:text-on-secondary-container px-space-lg py-space-sm rounded-lg font-label-lg text-label-lg transition-colors whitespace-nowrap font-bold">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Footer Grid -->
+    <div class="max-w-container-max mx-auto px-gutter-desktop py-space-3xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl mb-space-2xl">
+        <!-- Brand Info -->
+        <div>
+          <div class="flex items-center gap-space-xs mb-space-md">
+            <div class="w-8 h-8 rounded-full bg-primary text-secondary-container flex items-center justify-center font-serif font-bold text-base">S</div>
+            <span class="font-headline-sm text-headline-sm text-primary font-bold">Siddhi Vinayaka Cards</span>
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md leading-relaxed">
+            Preserving centuries of Indian ceremonial stationery heritage with gilded gold foiling, botanical embossing, and bespoke luxury craft.
+          </p>
+        </div>
+
+        <!-- Shop by Category -->
+        <div>
+          <h4 class="font-headline-sm text-headline-sm text-primary mb-space-md font-bold">Collections</h4>
+          <ul class="flex flex-col gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:all_invitations' %}">All Invitation Cards</a></li>
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:all_invitations' %}?q=hindu">Hindu Wedding Invitations</a></li>
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:all_invitations' %}?q=padded">Padded Velvet Cards</a></li>
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:all_invitations' %}?q=gold">Royal Heritage Gold Foil</a></li>
+          </ul>
+        </div>
+
+        <!-- Customer Care -->
+        <div>
+          <h4 class="font-headline-sm text-headline-sm text-primary mb-space-md font-bold">Customer Care</h4>
+          <ul class="flex flex-col gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:contact_us' %}">Order Free Sample Kit</a></li>
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:contact_us' %}">Printing &amp; Customization Proofs</a></li>
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:contact_us' %}">Domestic &amp; International Shipping</a></li>
+            <li><a class="hover:text-primary transition-colors" href="{% url 'catalog:contact_us' %}">Contact Support</a></li>
+          </ul>
+        </div>
+
+        <!-- Flagship Store & Contact Info -->
+        <div>
+          <h4 class="font-headline-sm text-headline-sm text-primary mb-space-md font-bold">Flagship Store</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed mb-2">
+            📍 #5-1-997, Koti, Putlibowli, Gowliguda, Hyderabad - 500095, Telangana (Near Ram Mandir)
+          </p>
+          <div class="flex flex-col gap-1 text-xs font-semibold text-primary mb-3">
+            <a href="tel:9618022264" class="hover:underline flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">call</span> +91 96180 22264
+            </a>
+            <a href="tel:8639093095" class="hover:underline flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">call</span> +91 86390 93095
+            </a>
+          </div>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=5-1-997+Koti+Putlibowli+Gowliguda+Hyderabad+500095+Telangana+Near+Ram+Mandir"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
+          >
+            <span class="material-symbols-outlined text-[16px]">map</span> View on Google Maps →
+          </a>
+        </div>
+      </div>
+
+      <!-- Live WhatsApp Callout Bar -->
+      <div class="bg-surface rounded-xl p-space-md flex flex-col md:flex-row items-center justify-between gap-space-md shadow-sm">
+        <div class="flex items-center gap-space-sm">
+          <div class="w-9 h-9 rounded-full bg-[#25d366] text-white flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-label-md text-label-md text-on-surface block font-bold">Immediate Wedding Consultant Assistance</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Chat with Master Calligraphers on WhatsApp</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-space-md">
+          <a class="bg-[#25d366] text-white hover:bg-[#20ba5a] px-space-md py-space-2xs rounded-lg font-label-md text-label-md transition-colors flex items-center gap-space-2xs font-bold shadow-sm" href="https://wa.me/{{ whatsapp_number|default:'919618022264' }}" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span>WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center font-body-sm text-body-sm text-on-surface-variant pt-space-xl">
+        © {% now "Y" %} Siddhi Vinayaka Cards Pvt Ltd. All rights reserved. Handcrafted with reverence across India.
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+  <script>
+    function toggleMobileMenu(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      var nav = document.getElementById('navLinks');
+      var icon = document.getElementById('hamburger-icon');
+      var btn = document.getElementById('hamburger');
+      if (!nav) return;
+
+      var isHidden = nav.classList.contains('hidden');
+      if (isHidden) {
+        nav.classList.remove('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+        if (icon) icon.textContent = 'close';
+      } else {
+        nav.classList.add('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (icon) icon.textContent = 'menu';
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      var nav = document.getElementById('navLinks');
+      var btn = document.getElementById('hamburger');
+      var icon = document.getElementById('hamburger-icon');
+      if (nav && btn && !btn.contains(e.target) && !nav.contains(e.target)) {
+        nav.classList.add('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (icon) icon.textContent = 'menu';
+      }
+    });
+  </script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

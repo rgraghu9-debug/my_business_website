@@ -1,0 +1,38 @@
+{% if result_hidden_fields %}
+<div class="hiddenfields font-mono hidden">
+  {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+</div>
+{% endif %}
+{% if results %}
+<div class="results overflow-x-auto border border-gold-400/40 rounded-lg shadow-sm bg-white">
+  <table id="result_list" class="w-full text-left text-xs text-ink-800 border-collapse">
+    <thead class="bg-gradient-to-r from-regal-800 to-regal-900 text-parchment-100 uppercase tracking-wider font-semibold text-[11px] font-luxury border-b border-gold-500/40">
+      <tr>
+        {% for header in result_headers %}
+          <th scope="col" {{ header.class_attrib }} class="px-4 py-3.5 text-gold-300 font-bold">
+            {% if header.sortable %}
+              <div class="text flex items-center gap-1">
+                <a href="{{ header.url_primary }}" class="text-gold-300 hover:text-white transition-colors font-bold">{{ header.text|capfirst }}</a>
+              </div>
+            {% else %}
+              <div class="text"><span class="text-gold-200 font-bold">{{ header.text|capfirst }}</span></div>
+            {% endif %}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-parchment-200 font-normal">
+      {% for result in results %}
+        {% if result.form and result.form.non_field_errors %}
+          <tr><td colspan="{{ result|length }}" class="p-2 text-xs text-rose-700 bg-rose-50">{{ result.form.non_field_errors }}</td></tr>
+        {% endif %}
+        <tr class="hover:bg-parchment-50 transition-colors group admin-row-hover">
+          {% for item in result %}
+            <td class="px-4 py-3.5 align-middle text-ink-800">{{ item }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}

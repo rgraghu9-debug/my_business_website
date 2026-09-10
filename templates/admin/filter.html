@@ -1,0 +1,8 @@
+{% load i18n %}
+{% for choice in choices %}
+  <li>
+    <a href="{{ choice.query_string }}" class="flex items-center justify-between px-2 py-1 rounded transition-colors {% if choice.selected %}font-bold text-regal-700 bg-gold-100/80 border-l-2 border-regal-700{% else %}text-ink-700 hover:bg-parchment-100{% endif %}">
+      <span>{{ choice.display }}</span>
+    </a>
+  </li>
+{% endfor %}

@@ -1,0 +1,165 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+
+{% block title %}{{ design.name }} — Siddhi Vinayaka Cards{% endblock %}
+
+{% block meta_description %}{{ design.description|truncatechars:160|default:"Handcrafted luxury wedding invitation design. Order via WhatsApp." }}{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+
+  <!-- ── Breadcrumb ─────────────────────────────────── -->
+  <div class="w-full bg-surface-container-low py-space-xs px-gutter-desktop">
+    <div class="max-w-container-max mx-auto flex items-center gap-space-2xs font-body-sm text-xs text-on-surface-variant">
+      <a class="hover:text-primary transition-colors" href="{% url 'catalog:home' %}">Home</a>
+      <span>/</span>
+      <a class="hover:text-primary transition-colors" href="{% url 'catalog:all_invitations' %}">All Invitations</a>
+      {% if design.category %}
+        <span>/</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'catalog:all_invitations' %}?category={{ design.category.slug }}">{{ design.category.name }}</a>
+      {% endif %}
+      <span>/</span>
+      <span class="text-on-surface font-semibold truncate">{{ design.name }}</span>
+    </div>
+  </div>
+
+  <!-- ── Main Detail Grid Section ───────────────────── -->
+  <section class="w-full py-space-2xl px-gutter-desktop bg-surface">
+    <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-2xl items-start">
+
+      <!-- Left 6 Cols: Product Image Showcase -->
+      <div class="lg:col-span-6 flex flex-col gap-space-md">
+        <div class="relative w-full aspect-[4/3] sm:aspect-[4/5] bg-surface-container-low rounded-2xl overflow-hidden shadow-lg border border-surface-variant/40">
+          <img
+            src="{{ design.get_image_url }}"
+            alt="{{ design.name }}"
+            class="w-full h-full object-cover"
+          />
+          {% if design.badge %}
+            <span class="absolute top-4 left-4 bg-primary text-on-primary font-label-sm text-xs px-3 py-1 rounded-full shadow font-bold">
+              {{ design.badge }}
+            </span>
+          {% endif %}
+          {% if design.discount_percent %}
+            <span class="absolute top-4 right-4 bg-error text-on-error font-label-sm text-xs px-3 py-1 rounded-full shadow font-bold">
+              {{ design.discount_percent }}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Right 6 Cols: Product Specifications & Order Actions -->
+      <div class="lg:col-span-6 flex flex-col gap-space-md bg-surface-container-lowest p-space-xl rounded-2xl shadow-sm border border-surface-variant/40">
+        <div>
+          <div class="flex items-center justify-between text-on-surface-variant font-label-sm text-xs mb-space-2xs">
+            <span class="font-bold text-secondary uppercase tracking-wider">SKU: {{ design.sku|default:"N/A" }}</span>
+            <div class="flex items-center text-secondary">
+              <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-bold ml-1 text-sm">{{ design.rating }}</span>
+              <span class="text-on-surface-variant ml-1">({{ design.reviews_count }} Family Reviews)</span>
+            </div>
+          </div>
+
+          <h1 class="font-headline-lg text-2xl md:text-3xl font-bold text-primary mb-space-2xs leading-tight">
+            {{ design.name }}
+          </h1>
+
+          {% if design.subtitle %}
+            <p class="font-label-md text-xs font-semibold text-secondary mb-space-sm">
+              {{ design.subtitle }}
+            </p>
+          {% endif %}
+
+          <div class="flex items-baseline gap-space-sm my-space-sm">
+            <span class="font-price-lg text-2xl md:text-3xl text-primary font-bold">{{ design.formatted_price }}</span>
+            <span class="font-label-sm text-xs text-on-surface-variant uppercase font-bold">Per Card (Incl. Inserts &amp; Outer Envelope)</span>
+          </div>
+        </div>
+
+        <p class="font-body-md text-xs md:text-sm text-on-surface-variant leading-relaxed">
+          {{ design.description|default:"A beautifully handcrafted wedding invitation suite. Features authentic gold foil hot stamping, botanical embossing, and heavy-weight cardstock." }}
+        </p>
+
+        <!-- Specifications Table -->
+        <div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-xs text-xs">
+          {% if design.category %}
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-on-surface-variant">Category</span>
+              <span class="font-bold text-on-surface">{{ design.category.name }}</span>
+            </div>
+          {% endif %}
+          {% if design.tradition %}
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-on-surface-variant">Tradition</span>
+              <span class="font-bold text-on-surface">{{ design.get_tradition_display }}</span>
+            </div>
+          {% endif %}
+          {% if design.craft_style %}
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-on-surface-variant">Craft Technique</span>
+              <span class="font-bold text-on-surface">{{ design.get_craft_style_display }}</span>
+            </div>
+          {% endif %}
+          <div class="flex justify-between py-1 border-b border-surface-variant/40">
+            <span class="text-on-surface-variant">Customization</span>
+            <span class="font-bold text-emerald-700">✔ Sanskrit, Hindi, Tamil, Telugu, English</span>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-on-surface-variant">Sample Availability</span>
+            <span class="font-bold text-primary">In Stock for Doorstep Courier</span>
+          </div>
+        </div>
+
+        <!-- WhatsApp Direct Inquiry Action -->
+        <div class="flex flex-col gap-space-sm pt-space-xs">
+          <a
+            href="{{ whatsapp_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full bg-primary text-on-primary hover:bg-primary-container py-3 rounded-xl font-label-lg text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2"
+          >
+            <span class="material-symbols-outlined text-[20px]">chat</span>
+            <span>Order / Inquire via WhatsApp</span>
+          </a>
+          <a href="{% url 'catalog:all_invitations' %}" class="w-full text-center bg-surface-container hover:bg-surface-container-high text-primary py-2.5 rounded-xl font-label-md text-xs font-bold transition-colors">
+            ← Back to All Invitations
+          </a>
+        </div>
+
+        <p class="font-body-sm text-[11px] text-on-surface-variant text-center">
+          💬 Clicking WhatsApp will open a pre-filled inquiry message about this card. We will share paper samples and digital proofing options immediately.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Related Designs Section ────────────────────── -->
+  {% if related_designs %}
+    <section class="w-full py-space-2xl px-gutter-desktop bg-surface-container-low border-t border-surface-variant/40">
+      <div class="max-w-container-max mx-auto">
+        <h2 class="font-headline-lg text-xl md:text-2xl text-primary font-bold mb-space-lg">You May Also Like</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+          {% for rel in related_designs %}
+            <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div class="relative aspect-[4/3] overflow-hidden bg-surface-container">
+                <img class="w-full h-full object-cover" alt="{{ rel.name }}" src="{{ rel.get_image_url }}" />
+              </div>
+              <div class="p-space-sm flex-1 flex flex-col justify-between">
+                <h4 class="font-label-lg text-xs font-bold text-on-surface line-clamp-2">
+                  <a href="{% url 'catalog:design_detail' rel.pk %}">{{ rel.name }}</a>
+                </h4>
+                <div class="flex items-center justify-between mt-2">
+                  <span class="font-price-lg text-sm text-primary font-bold">{{ rel.formatted_price }}</span>
+                  <a href="{% url 'catalog:design_detail' rel.pk %}" class="text-xs text-primary font-bold hover:underline">View →</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+</div>
+{% endblock %}
