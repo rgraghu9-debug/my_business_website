@@ -16,6 +16,11 @@
   <!-- Local Custom CSS Stylesheet -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpg' %}" />
+  <link rel="apple-touch-icon" href="{% static 'images/logo.jpg' %}" />
+
+
   <!-- Tailwind CSS Configuration -->
   <script>
     window.tailwind = {
@@ -126,9 +131,11 @@
           
           <!-- Left: Logo & Company Name -->
           <a href="{% url 'catalog:home' %}" class="flex items-center gap-2.5 sm:gap-space-sm group shrink-0">
-            <div class="w-9 h-9 rounded-full bg-primary text-secondary-container flex items-center justify-center font-serif text-lg font-bold shadow-sm">
-              S
-            </div>
+            <img
+              src="{% static 'images/logo.jpg' %}"
+              alt="Siddhi Vinayaka Cards Logo"
+              class="w-10 h-10 rounded-full object-contain bg-white shadow-sm border border-surface-variant/30"
+            />
             <div class="flex flex-col">
               <span class="font-headline-sm text-sm sm:text-base text-primary leading-tight font-bold group-hover:text-secondary transition-colors">
                 Siddhi Vinayaka Cards
