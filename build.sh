@@ -13,3 +13,7 @@ python manage.py collectstatic --no-input
 
 # Apply database migrations
 python manage.py migrate
+
+# Seed default admin user and initial catalog data (safe and idempotent)
+python manage.py create_admin || true
+python manage.py seed_catalog || true
