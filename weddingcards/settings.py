@@ -55,7 +55,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
+        "APP_DIRS": False,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -64,9 +64,16 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "catalog.context_processors.whatsapp_number",
             ],
+            "loaders": [
+                # Check project-level templates/  FIRST
+                "django.template.loaders.filesystem.Loader",
+                # Then fall back to each installed app's templates/
+                "django.template.loaders.app_directories.Loader",
+            ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = "weddingcards.wsgi.application"
 
