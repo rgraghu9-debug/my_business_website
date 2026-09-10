@@ -25,19 +25,6 @@ ALLOWED_HOSTS = os.environ.get(
     "localhost,127.0.0.1,testserver,*",
 ).split(",")
 
-# Vercel and production domains
-ALLOWED_HOSTS += [
-    ".vercel.app",
-    ".now.sh",
-]
-
-# CSRF trusted origins for Vercel deployments
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.vercel.app",
-    "https://*.now.sh",
-    os.environ.get("CSRF_TRUSTED_ORIGIN", ""),
-]
-
 # ---------------------------------------------------------------------------
 # Application definition
 # ---------------------------------------------------------------------------
