@@ -1,4 +1,4 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,30 +114,41 @@
 <body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
 
   <!-- ── Intro Video Splash Screen ─────────────────────── -->
-  <div id="intro-overlay" style="position:fixed;inset:0;z-index:99999;background:#1a0008;width:100vw;height:100vh;overflow:hidden;">
-
-    <!-- Video — no controls, fills entire screen -->
-    <video
-      id="intro-video"
-      src="{% static 'videos/intro.mp4' %}"
-      playsinline
-      preload="auto"
-      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
-    ></video>
-
-    <!-- Subtle vignette overlay -->
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 35%,transparent 75%,rgba(0,0,0,0.3) 100%);pointer-events:none;"></div>
-
-    <!-- Top-left: Brand Badge only — no buttons -->
-    <div style="position:absolute;top:1.25rem;left:1.25rem;display:flex;align-items:center;gap:0.6rem;z-index:1;">
-      <img src="{% static 'images/logo.jpg' %}" alt="Logo" style="width:2.5rem;height:2.5rem;border-radius:50%;object-fit:contain;background:#fff;border:2px solid rgba(254,214,91,0.7);padding:2px;" />
+  <style>
+    #intro-overlay { position:fixed;inset:0;z-index:99999;background:#0d0004;width:100vw;height:100vh;overflow:hidden; }
+    #intro-video   { position:absolute;inset:0;width:100%;height:100%;object-fit:cover; }
+    /* On mobile: show full video without cropping */
+    @media (max-width: 768px) {
+      #intro-video { object-fit:contain; background:#0d0004; }
+    }
+    #intro-badge {
+      position:absolute;top:1rem;left:1rem;display:flex;align-items:center;gap:.5rem;z-index:2;
+    }
+    #intro-badge img { width:2.2rem;height:2.2rem;border-radius:50%;object-fit:contain;background:#fff;border:2px solid rgba(254,214,91,0.7);padding:2px; }
+    #intro-badge .name { font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9);line-height:1.2; }
+    #intro-badge .sub  { font-size:.55rem;color:rgba(254,214,91,.9);letter-spacing:.12em;text-transform:uppercase; }
+    @media (max-width: 480px) {
+      #intro-badge img  { width:1.8rem;height:1.8rem; }
+      #intro-badge .name { font-size:.75rem; }
+      #intro-badge .sub  { font-size:.5rem; }
+    }
+    #intro-vignette { position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 40%,transparent 70%,rgba(0,0,0,.25) 100%);pointer-events:none;z-index:1; }
+  </style>
+  <div id="intro-overlay">
+    <!-- Video — no controls, responsive -->
+    <video id="intro-video" src="{% static 'videos/intro.mp4' %}" playsinline preload="auto"></video>
+    <!-- Vignette -->
+    <div id="intro-vignette"></div>
+    <!-- Brand badge -->
+    <div id="intro-badge">
+      <img src="{% static 'images/logo.jpg' %}" alt="Logo"/>
       <div>
-        <div style="font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.8);">Siddhi Vinayak Cards</div>
-        <div style="font-size:0.6rem;color:rgba(254,214,91,0.9);letter-spacing:0.15em;text-transform:uppercase;">Heritage &amp; Luxury Invitations</div>
+        <div class="name">Siddhi Vinayak Cards</div>
+        <div class="sub">Heritage &amp; Luxury Invitations</div>
       </div>
     </div>
-
   </div>
+
 
   <script>
     (function() {
