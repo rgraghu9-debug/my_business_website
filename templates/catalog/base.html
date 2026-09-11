@@ -113,7 +113,8 @@
 </head>
 <body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
 
-  <!-- ── Intro Video Splash Screen ─────────────────────── -->
+  {% if request.resolver_match.url_name == 'home' or request.path == '/' %}
+  <!-- ── Intro Video Splash Screen (Only on Home Page) ──────── -->
   <style>
     #intro-overlay { position:fixed;inset:0;z-index:99999;background:#0d0004;width:100vw;height:100vh;overflow:hidden; }
     #intro-video   { position:absolute;inset:0;width:100%;height:100%;object-fit:cover; }
@@ -149,7 +150,6 @@
     </div>
   </div>
 
-
   <script>
     (function() {
       var overlay = document.getElementById('intro-overlay');
@@ -183,6 +183,7 @@
       }
     })();
   </script>
+  {% endif %}
 
   <!-- ── Header ─────────────────────────────────────── -->
   <header class="fixed top-0 left-0 right-0 z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
@@ -483,40 +484,6 @@
   </footer>
 
   <script src="{% static 'js/main.js' %}"></script>
-  <script>
-    function toggleMobileMenu(e) {
-      if (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-      var nav = document.getElementById('navLinks');
-      var icon = document.getElementById('hamburger-icon');
-      var btn = document.getElementById('hamburger');
-      if (!nav) return;
-
-      var isHidden = nav.classList.contains('hidden');
-      if (isHidden) {
-        nav.classList.remove('hidden');
-        if (btn) btn.setAttribute('aria-expanded', 'true');
-        if (icon) icon.textContent = 'close';
-      } else {
-        nav.classList.add('hidden');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-        if (icon) icon.textContent = 'menu';
-      }
-    }
-
-    document.addEventListener('click', function(e) {
-      var nav = document.getElementById('navLinks');
-      var btn = document.getElementById('hamburger');
-      var icon = document.getElementById('hamburger-icon');
-      if (nav && btn && !btn.contains(e.target) && !nav.contains(e.target)) {
-        nav.classList.add('hidden');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-        if (icon) icon.textContent = 'menu';
-      }
-    });
-  </script>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

@@ -1,32 +1,52 @@
 // ── Mobile Nav Toggle ─────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
-const hamburgerIcon = document.getElementById('hamburger-icon');
-
-if (hamburger && navLinks) {
-  hamburger.addEventListener('click', (e) => {
+function handleMobileMenuToggle(e) {
+  if (e) {
     e.stopPropagation();
-    navLinks.classList.toggle('hidden');
-    navLinks.classList.toggle('open');
-    const isOpen = !navLinks.classList.contains('hidden');
-    hamburger.setAttribute('aria-expanded', isOpen);
-    if (hamburgerIcon) {
-      hamburgerIcon.textContent = isOpen ? 'close' : 'menu';
-    }
-  });
+    e.preventDefault();
+  }
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+
+  if (!navLinks) return;
+  const isHidden = navLinks.classList.contains('hidden') || navLinks.style.display === 'none' || window.getComputedStyle(navLinks).display === 'none';
+
+  if (isHidden) {
+    navLinks.classList.remove('hidden');
+    navLinks.style.display = 'flex';
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+    if (hamburgerIcon) hamburgerIcon.textContent = 'close';
+  } else {
+    navLinks.classList.add('hidden');
+    navLinks.style.display = 'none';
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    if (hamburgerIcon) hamburgerIcon.textContent = 'menu';
+  }
+}
+
+window.toggleMobileMenu = handleMobileMenuToggle;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+
+  if (hamburger) {
+    hamburger.onclick = handleMobileMenuToggle;
+  }
 
   // Close nav on outside click
   document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+    if (hamburger && navLinks && !hamburger.contains(e.target) && !navLinks.contains(e.target)) {
       navLinks.classList.add('hidden');
-      navLinks.classList.remove('open');
+      navLinks.style.display = 'none';
       hamburger.setAttribute('aria-expanded', 'false');
+      const hamburgerIcon = document.getElementById('hamburger-icon');
       if (hamburgerIcon) {
         hamburgerIcon.textContent = 'menu';
       }
     }
   });
-}
+});
 
 // ── Scroll Fade-in Animation ──────────────────────
 const fadeEls = document.querySelectorAll('.fade-in');
