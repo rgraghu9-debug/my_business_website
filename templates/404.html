@@ -1,0 +1,27 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Design Not Found — Siddhi Vinayaka Cards{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[60vh] py-space-3xl px-gutter-desktop text-center bg-surface">
+  <div class="max-w-lg mx-auto bg-surface-container-lowest p-space-2xl rounded-2xl border border-surface-variant/40 shadow-sm">
+    <span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-xs font-bold rounded-full mb-space-sm uppercase tracking-wider">
+      Page Not Found (404)
+    </span>
+    <h1 class="font-headline-lg text-3xl font-bold text-primary mb-space-xs">
+      Looking for a Special Invitation?
+    </h1>
+    <p class="font-body-md text-sm text-on-surface-variant mb-space-lg">
+      The wedding card design or page you requested could not be located. Browse our complete ceremonial collection or chat directly with our stationery team.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-space-xs justify-center">
+      <a href="{% url 'catalog:all_invitations' %}" class="bg-primary hover:bg-primary-container text-on-primary font-bold px-space-lg py-space-xs rounded-lg transition-colors">
+        Browse All Invitations
+      </a>
+      <a href="{% url 'catalog:home' %}" class="bg-surface-container hover:bg-surface-variant text-on-surface font-bold px-space-lg py-space-xs rounded-lg transition-colors">
+        Return Home
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@ services:
   - type: web
     name: siddhi-vinayak-cards
     runtime: python
-    buildCommand: "./build.sh"
+    buildCommand: "bash ./build.sh"
     startCommand: "gunicorn weddingcards.wsgi --workers 2 --timeout 60"
     plan: free
     envVars:
